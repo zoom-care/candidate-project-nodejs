@@ -1,6 +1,6 @@
 const fs = require('fs');
 const loki = require('lokijs');
-const db = new loki('zoomcare-code-challenge-nodejs.json');
+const db = new loki('zoom-care-candidate-project-nodejs.json');
 
 module.exports = {
   init () {

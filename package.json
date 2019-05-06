@@ -1,13 +1,13 @@
 {
-  "name": "zoomcare-code-challenge-nodejs",
+  "name": "zoom-care-candidate-project-nodejs",
   "version": "0.0.0",
   "private": true,
   "engines": {
     "node": ">=10"
   },
   "scripts": {
-    "start": "PORT=3001 DEBUG=zoomcare-code-challenge-nodejs:* node ./bin/www",
-    "dev": "PORT=3001 DEBUG=zoomcare-code-challenge-nodejs:* nodemon ./bin/www"
+    "start": "PORT=3001 DEBUG=zoom-care-candidate-project-nodejs:* node ./bin/www",
+    "dev": "PORT=3001 DEBUG=zoom-care-candidate-project-nodejs:* nodemon ./bin/www"
   },
   "dependencies": {
     "cookie-parser": "~1.4.3",
