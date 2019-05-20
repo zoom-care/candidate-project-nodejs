@@ -1,7 +1,6 @@
 module.exports = (app) => {
     const commentsCtrl = require('../controllers/comment.controller.js');
 
-    app.get('/comments', commentsCtrl.findAll);
     app.get('/commentsByPost/:postId', commentsCtrl.findByPost);
 
     /**
