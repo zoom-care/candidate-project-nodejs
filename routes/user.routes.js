@@ -1,9 +1,14 @@
 module.exports = (app) => {
-    const users = require('../controllers/user.controller.js');
+    const usersCtrl = require('../controllers/user.controller.js');
+    /**
+     * Require authorization header for routes that perform mutations
+     */
+    app.use(function(req, res, next) {
+      if (!req.headers.authorization) {
+        return res.status(403).json({ error: 'No credentials sent!' });
+      }
+      next();
+    });
+    app.post('/users', usersCtrl.create);
 
-    app.post('/users', users.create);
-    app.get('/users', users.findAll);
-    app.get('/users/:userId', users.findOne);
-    app.put('/users/:userId', users.update);
-    app.delete('/users/:userId', users.delete);
 }

@@ -4,27 +4,27 @@ const comments = db.getCollection('comments');
 // Create and Save a new Comment
 exports.create = (req, res) => {
     // Validate request
-    if(!req.body.id || !req.body.postId || !req.body.body) {
+    if(!req.body.postId || !req.body.body) {
         return res.status(400).send({
-            message: "Missing required data"
+            message: "Missing required data."
         });
     }
     const comment = {
         postId: req.body.postId,
-        id: req.body.id,
         name: req.body.name || 'untitled',
         body: req.body.body
     }
-
     // Save comment in the database
-    comments.insert(comment)
-    .then(data => {
-        res.send(data);
-    }).catch(err => {
-        res.status(500).send({
-            message: "Some error occurred while creating the comment."
+    const result = comments.insert(comment);
+    if (result) {
+        res.send({
+            message: "Comment created."
         });
-    });
+    } else {
+        res.status(500).send({
+            message: "Some error occurred while creating comment."
+        });
+    }
 };
 
 // Retrieve and return all comments from the database.
@@ -60,13 +60,13 @@ exports.findOne = (req, res) => {
 // Find a single comment with a commentId
 exports.findByPost = (req, res) => {
     // Validate request
-console.log('findByPost - ', req.params.postId)
     if(!req.params.postId) {
         return res.status(400).send({
             message: "Missing required id"
         });
     }
-    const result = comments.find({ postId: { '$eq' : req.params.postId } });
+    const postId = parseInt(req.params.postId);
+    const result = comments.find({ postId: { '$eq' : postId } });
     if (result) {
         res.send(result);
     } else {
@@ -76,18 +76,12 @@ console.log('findByPost - ', req.params.postId)
     }
 };
 
-
-// Update a comment identified by the commentId in the request
-exports.update = (req, res) => {
-
-};
-
 // Delete a comment with the specified commentId in the request
 exports.delete = (req, res) => {
     // Validate request
     if(!req.params.commentId) {
         return res.status(400).send({
-            message: "Missing required id"
+            message: "Missing required id."
         });
     }
     const result = comments.get(req.params.commentId);
@@ -98,7 +92,7 @@ exports.delete = (req, res) => {
         });
     } else {
         res.status(500).send({
-            message: "Some error occurred while retrieving comment."
+            message: "Some error occurred while deleting comment."
         });
     }
 

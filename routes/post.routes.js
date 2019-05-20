@@ -1,9 +1,13 @@
 module.exports = (app) => {
-    const posts = require('../controllers/post.controller.js');
-
-    app.post('/posts', posts.create);
-    app.get('/posts', posts.findAll);
-    app.get('/posts/:postId', posts.findOne);
-    app.put('/posts/:postId', posts.update);
-    app.delete('/posts/:postId', posts.delete);
+    const postsCtrl = require('../controllers/post.controller.js');
+    /**
+     * Require authorization header for routes that perform mutations
+     */
+    app.use(function(req, res, next) {
+      if (!req.headers.authorization) {
+        return res.status(403).json({ error: 'No credentials sent!' });
+      }
+      next();
+    });
+    app.put('/posts/:postId', postsCtrl.update);
 }
