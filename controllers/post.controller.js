@@ -1,5 +1,6 @@
 const db = require('../config/loki').getDatabase();
 const posts = db.getCollection('posts');
+const sanitizer = require('sanitize')();
 
 // Update a post identified by the postId in the request
 exports.update = (req, res) => {
@@ -9,8 +10,15 @@ exports.update = (req, res) => {
             message: "Missing required data."
         });
     }
-    const post = req.body;
-
+    // Sanitize data
+    const title = sanitizer.value(req.body.title, 'string');
+    const body = sanitizer.value(req.body.body, 'string');
+    const postId = sanitizer.value(req.body.postId, 'integer');
+    const post = {
+        postId,
+        title,
+        body,
+    };
     const result = posts.update(post);
     if (result) {
         res.send({
