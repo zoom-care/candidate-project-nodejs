@@ -4,3 +4,110 @@ block content
   img(src="https://avatars0.githubusercontent.com/u/48925141?s=150")
   h1= title
   p Welcome to the #{title}
+  div(style="border: 1px solid #999; padding: 30px; width: 80%")
+
+
+    div(class="createC")
+      input(id="btnCreateUser", type="button", value="Create a new user")
+
+    table(id="createUserC")
+      tr
+        td(class="label") name
+        td
+          input(id="f_name")
+      tr
+        td(class="label") username
+        td
+          input(id="f_username")
+      tr
+        td(class="label") email
+        td
+          input(id="f_email")
+      tr
+        td(class="label") website
+        td
+          input(id="f_website")
+      tr
+        td(class="label") phone(s)
+        td
+          input(id="f_phone")
+      tr
+        td(class="label") street
+        td
+          input(id="f_street")
+      tr
+        td(class="label") city
+        td
+          input(id="f_city")
+      tr
+        td(class="label") zipcode
+        td
+          input(id="f_zipcode")
+      tr
+        td(class="label") latitude
+        td
+          input(id="f_latitude")
+      tr
+        td(class="label") longitude
+        td
+          input(id="f_longitude")
+
+      tr
+        td(class="label")
+          input(class="btnCancel",type="button", value="cancel")
+          input(class="btnSave",type="button", value="add user")
+
+
+
+
+    div(id="mainC") Existing Users:
+          div(class="item")
+            select(id="userLookup")
+
+
+          table(id="userTable")
+            thead
+              th name
+              th username
+              th email
+              th website
+              th phone
+              th street
+              th city
+              th zipcode
+              th geo
+
+            tbody
+              tr
+              td(class="val name")
+              td(class="val username")
+              td(class="val email")
+              td(class="val website")
+              td(class="val phoneNumbers")
+              td(class="val street")
+              td(class="val city")
+              td(class="val zipcode")
+              td(class="val geo")
+
+          div(id="postListingsC")
+
+          div(id="postDetailC")
+            h2 Post:
+              div(class="title")
+              div(class="body")
+              button(class="btnEditPost") Edit Post
+            h2 Comments:
+              div(class="commentC")
+
+
+          div(id="postEditC")
+            div
+              p title:
+              input(class="title" size="50")
+            div
+              p post:
+              textarea(class="body" rows="10" cols="60")
+            div
+              button(class="btnCancel") Cancel
+              button(class="btnSave") Save
+            input(type="hidden" id="edit_postID")

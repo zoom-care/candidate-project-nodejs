@@ -6,3 +6,101 @@ body {
 a {
   color: #00B7FF;
 }
+
+#mainC {
+    font-weight: bold;
+}
+
+.item {
+    margin-left: 1em;
+}
+.createC {
+    text-align: right;
+}
+
+
+
+
+/* Create a new user */
+#createUserC {
+    display: none;
+}
+
+#createUserC .label {
+    font-weight: bold;
+    text-align: right;
+}
+
+
+/* User information table */
+#userTable {
+    display: none;
+    margin-top: 2em;
+    border-collapse: collapse;
+}
+#userTable tbody {
+    font-weight: normal;
+}
+#userTable thead {
+    background-color: #ddd;
+}
+
+#userTable, #userTable th, #userTable td {
+    border: 1px solid #333;
+    padding: 5px;
+    vertical-align: top;
+}
+
+/* Post summary listings */
+#postListingsC {
+    margin-top: 1em;
+}
+#postListingsC .postRow {
+    cursor: pointer;
+    margin-bottom: 1.2em;
+}
+
+#postListingsC .postRow .title {
+    color: #336699;
+    font-weight: bold;
+}
+#postListingsC .postRow .summary {
+    margin-left: .8em;
+    font-weight: normal;
+}
+
+/* Post Detail */
+#postDetailC {
+    display: none;
+}
+
+#postDetailC .title {
+    font-weight: bold;
+    font-size: 1em;
+    margin-left: 1em;
+}
+#postDetailC .body {
+    font-weight: normal;
+    font-size: .7em;
+    margin-left: 2em;
+}
+
+#postDetailC .commentC {
+    margin-left: 2em;
+    font-size: .7em;
+}
+#postDetailC .commentC a {
+    text-decoration: none;
+}
+
+#postDetailC .commentC .row {
+    margin-bottom: 2em;
+    font-weight: normal;
+}
+#postDetailC .commentC .row .author {
+    font-weight: bold;
+}
+
+#postEditC {
+    display: none;
+}
