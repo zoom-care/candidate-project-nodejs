@@ -4,6 +4,7 @@ module.exports = router
 
 const posts = db.getCollection('posts')
 const comments = db.getCollection('comments')
+const users = db.getCollection('users')
 
 //GET post and associated comments
 router.get('/:postId', (req, res, next) => {
@@ -13,7 +14,9 @@ router.get('/:postId', (req, res, next) => {
     res.status(400).send('Invalid post ID')
   }
   const postComments = comments.find({ postId: postId })
-  res.json({ post, postComments })
+  const author = users.findOne({ id: post.userId })
+  // res.json({ post, postComments })
+  res.render('post', { post, postComments, author })
 })
 
 //PUT update post

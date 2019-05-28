@@ -1,8 +1,83 @@
 body {
-  padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  color: #2E424A;
+  margin: 0px;
 }
 
 a {
-  color: #00B7FF;
+  color: #1EBEE7;
+}
+
+h2 {
+  padding: 0px 15px;
+}
+
+ul {
+  list-style: none;
+  margin: 3rem auto;
+  border: 1px solid #9A9A9A;
+  padding: 0px;
+  width: 700px;
+}
+
+.post-container {
+  background-color: #1EBEE7;
+  padding: 10px 0;
+}
+
+.single-post {
+  background-color: white;
+  border-radius: .5rem;
+  padding: 15px;
+  margin: 40px auto;
+  width: 700px;
+}
+
+.single-comment {
+  border-top: 1px solid #9A9A9A;
+  padding: 15px;
+}
+
+.fa {
+  font-size: 18px;
+}
+
+.icon-title {
+  display: inline;
+  padding-left: 5px;
+}
+
+.comment-email {
+  color: #9A9A9A;
+  display: inline;
+  margin-left: 10px;
+  vertical-align: super;
+}
+
+.avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
+
+.image-block {
+  padding: 10px;
+}
+
+.post-author {
+  color: #9A9A9A;
+}
+
+.logo {
+  height: 30px;
+  margin: 10px 0;
+}
+
+.header {
+  width: 700px;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #9A9A9A;
 }

@@ -1,0 +1,28 @@
+extends layout
+
+block content
+  div(class='header')
+    img.logo(src='/logo.png' alt='Zoom logo')
+    div
+      i.fa.fa-edit(aria-hidden='true')
+      p(class='icon-title') Post
+
+  div(class='post-container')
+    div(class='single-post')
+      h1 #{post.title}
+
+      p(class='post-author') #[em by #{author.username}]
+
+      p #{post.body}
+
+  ul
+    li
+      h2 Comments
+    for comment in postComments
+      div(class='single-comment')
+        li= div
+            h3(class='comment-title') #{comment.name}
+            p(class='comment-body') #{comment.body}
+            .image-block
+              img.avatar(src='/user.png' alt='User avatar')
+              p(class='comment-email') #[em #{comment.email}]
