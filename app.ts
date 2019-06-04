@@ -2,20 +2,17 @@ const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 
 import * as path from 'path';
+import cors from 'cors';
 import createError from 'http-errors';
 import express, { NextFunction, Request, Response } from 'express';
-import cors from 'cors';
 
 import { Database } from './config/database';
 import { isAuthorized } from './auth/check-auth-header';
 import { PostService } from './post/post.service';
-import { User } from './user/user';
-import { validateUser } from './user/user-validation';
+import { UserRoutes } from './user/user.routes';
 
 const db = new Database();
 const app = express();
-
-const postService = new PostService(db.get());
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -32,25 +29,7 @@ app.get('/', (_req: Request, res: Response) => {
   res.render('index', { title: 'ZOOM+Care Candidate Code Challenge - NodeJS API - Alex Luecke' });
 });
 
-app.get('/user/:userId/posts', (req: Request, res: Response) => {
-  const userId = +req.params.userId;
-  const userPosts = postService.getData(post => post.userId === userId);
-  res.render('posts', { posts: userPosts });
-});
-
-app.post('/user', (req: Request, res: Response) => {
-  if (!isAuthorized(req.headers)) {
-    return res.status(401).json({ error: 'unauthorized' });
-  }
-
-  const newUser: Partial<User> = req.params;
-
-  if (!validateUser(newUser)) {
-    return res.status(400).json({ error: 'could not create user' });
-  }
-
-  res.send({ success: 'user created' });
-});
+new UserRoutes(app, new PostService(db.get()));
 
 app.delete('/comment/:commentId', (req: Request, res: Response) => {
   if (!isAuthorized(req.headers)) {
