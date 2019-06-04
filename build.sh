@@ -2,6 +2,6 @@
 
 tsc 
 
-for d in bin views config data; do
+for d in bin views data; do
     cp -R $d dist/.
 done
