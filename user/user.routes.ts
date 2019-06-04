@@ -29,6 +29,5 @@ export class UserRoutes {
 
       res.send({ success: 'user created' });
     });
-
   }
 }
