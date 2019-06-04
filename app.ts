@@ -6,6 +6,7 @@ import cors from 'cors';
 import createError from 'http-errors';
 import express, { NextFunction, Request, Response } from 'express';
 
+import { AppRoutes } from './app.routes';
 import { CommentRoutes } from './comment/comment.routes';
 import { Database } from './config/database';
 import { PostService } from './post/post.service';
@@ -22,8 +23,11 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use((cookieParser as any)());
-app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors());
+
+new AppRoutes(app);
+new UserRoutes(app, new PostService(db.get()));
+new CommentRoutes(app, db.get());
 
 // catch 404 and forward to error handler
 app.use((_req: any, _res: any, next: any) => {
@@ -40,12 +44,5 @@ app.use((err: any, req: Request, res: Response, _next: NextFunction) => {
   res.status(err.status || 500);
   res.render('error');
 });
-
-app.get('/', (_req: Request, res: Response) => {
-  res.render('index', { title: 'ZOOM+Care Candidate Code Challenge - NodeJS API - Alex Luecke' });
-});
-
-new UserRoutes(app, new PostService(db.get()));
-new CommentRoutes(app, db.get());
 
 module.exports = app;
