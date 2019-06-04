@@ -4,6 +4,7 @@ const cookieParser = require('cookie-parser');
 import * as path from 'path';
 import createError from 'http-errors';
 import express, { NextFunction, Request, Response } from 'express';
+import cors from 'cors';
 
 import { Database } from './config/database';
 import { isAuthorized } from './auth/check-auth-header';
@@ -25,6 +26,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use((cookieParser as any)());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(cors());
 
 app.get('/', (_req: Request, res: Response) => {
   res.render('index', { title: 'ZOOM+Care Candidate Code Challenge - NodeJS API - Alex Luecke' });
