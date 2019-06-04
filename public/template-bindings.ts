@@ -29,7 +29,7 @@ function request(
 
   xhr.onload = () => {
     if (xhr.status !== 200) {
-      // TODO: err response
+      console.error(xhr.response);
       return;
     }
 
