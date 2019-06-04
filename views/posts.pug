@@ -1,0 +1,15 @@
+extends layout
+
+block content
+  h1="Posts"
+  div.posts
+    each post in posts
+        hr
+        div.post
+            h2.post-header=post.title
+            p.post-body=post.body
+            h4="Comments"
+            div.comment
+                each comment in post.comments
+                    b.comment-header=comment.name + " - " + comment.email
+                    p.comment-header=comment.body
