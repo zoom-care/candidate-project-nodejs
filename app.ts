@@ -1,7 +1,7 @@
 const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 
-import * as createError from 'http-errors';
+import createError from 'http-errors';
 import * as path from 'path';
 import express, {
 	NextFunction,
@@ -10,9 +10,12 @@ import express, {
 } from 'express';
 
 import { Database } from './config/database';
+import { PostService } from './post/post.service';
 
 const db = new Database();
 const app = express();
+
+const postService = new PostService(db.get());
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -28,9 +31,15 @@ app.get('/', (_req: Request, res: Response) => {
   res.render('index', { title: 'ZOOM+Care Candidate Code Challenge - NodeJS API - Alex Luecke' });
 });
 
+app.get('/user/:userId/posts', (req: Request, res: Response) => {
+  const userId = +req.params.userId;
+  const userPosts = postService.getData(post => post.userId === +userId);
+  res.render('posts', { posts: userPosts });
+});
+
 // catch 404 and forward to error handler
 app.use((_req: any, _res: any, next: any) => {
-  next((createError as any)(404));
+  next(createError(404));
 });
 
 // error handler
