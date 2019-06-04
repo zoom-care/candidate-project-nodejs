@@ -8,6 +8,8 @@ import express, { NextFunction, Request, Response } from 'express';
 import { AUTH_TOKEN } from './config/auth_token';
 import { Database } from './config/database';
 import { PostService } from './post/post.service';
+import { User } from './user/user';
+import { validateUser } from './user/user-validation';
 
 const db = new Database();
 const app = express();
@@ -32,6 +34,20 @@ app.get('/user/:userId/posts', (req: Request, res: Response) => {
   const userId = +req.params.userId;
   const userPosts = postService.getData(post => post.userId === userId);
   res.render('posts', { posts: userPosts });
+});
+
+app.post('/user', (req: Request, res: Response) => {
+  if (!req.headers.authorization || req.headers.authorization !== AUTH_TOKEN) {
+    return res.status(401).json({ error: 'unauthorized' });
+  }
+
+  const newUser: Partial<User> = req.params;
+
+  if (!validateUser(newUser)) {
+    return res.status(400).json({ error: 'could not create user' });
+  }
+
+  res.send({ success: 'user created' });
 });
 
 app.delete('/comment/:commentId', (req: Request, res: Response) => {
