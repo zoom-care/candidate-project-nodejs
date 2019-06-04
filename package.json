@@ -6,10 +6,10 @@
     "node": ">=10"
   },
   "scripts": {
-    "start": "npm run build && PORT=3001 DEBUG=zoom-care-candidate-project-nodejs:* node ./bin/www",
-    "dev": "npm run build && PORT=3001 DEBUG=zoom-care-candidate-project-nodejs:* nodemon ./bin/www",
+    "start": "npm run build && PORT=3001 DEBUG=zoom-care-candidate-project-nodejs:* node ./dist/bin/www",
+    "dev": "npm run build && PORT=3001 DEBUG=zoom-care-candidate-project-nodejs:* nodemon ./dist/bin/www",
     "clean": "rm -rf dist",
-    "build": "tsc && cp -R bin/ dist/. && cp -R views dist/."
+    "build": "./build.sh"
   },
   "dependencies": {
     "cookie-parser": "1.4.3",
