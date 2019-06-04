@@ -6,8 +6,8 @@ import cors from 'cors';
 import createError from 'http-errors';
 import express, { NextFunction, Request, Response } from 'express';
 
+import { CommentRoutes } from './comment/comment.routes';
 import { Database } from './config/database';
-import { isAuthorized } from './auth/check-auth-header';
 import { PostService } from './post/post.service';
 import { UserRoutes } from './user/user.routes';
 
@@ -25,22 +25,6 @@ app.use((cookieParser as any)());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors());
 
-app.get('/', (_req: Request, res: Response) => {
-  res.render('index', { title: 'ZOOM+Care Candidate Code Challenge - NodeJS API - Alex Luecke' });
-});
-
-new UserRoutes(app, new PostService(db.get()));
-
-app.delete('/comment/:commentId', (req: Request, res: Response) => {
-  if (!isAuthorized(req.headers)) {
-    return res.status(401).json({ error: 'unauthorized' });
-  }
-
-  const commentId = +req.params.commentId;
-  db.get().getCollection('comments').removeWhere(comment => comment.id === commentId);
-  res.send({ success: 'comment deleted' });
-});
-
 // catch 404 and forward to error handler
 app.use((_req: any, _res: any, next: any) => {
   next(createError(404));
@@ -56,5 +40,12 @@ app.use((err: any, req: Request, res: Response, _next: NextFunction) => {
   res.status(err.status || 500);
   res.render('error');
 });
+
+app.get('/', (_req: Request, res: Response) => {
+  res.render('index', { title: 'ZOOM+Care Candidate Code Challenge - NodeJS API - Alex Luecke' });
+});
+
+new UserRoutes(app, new PostService(db.get()));
+new CommentRoutes(app, db.get());
 
 module.exports = app;
