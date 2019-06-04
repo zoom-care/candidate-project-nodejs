@@ -37,6 +37,12 @@ app.get('/user/:userId/posts', (req: Request, res: Response) => {
   res.render('posts', { posts: userPosts });
 });
 
+app.delete('/comment/:commentId', (req: Request, res: Response) => {
+  const commentId = +req.params.commentId;
+  db.get().getCollection('comments').removeWhere(comment => comment.id === commentId);
+  res.send({ success: 'comment deleted' });
+});
+
 // catch 404 and forward to error handler
 app.use((_req: any, _res: any, next: any) => {
   next(createError(404));
