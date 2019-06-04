@@ -1,15 +1,15 @@
-import * as loki from 'lokijs';
+import Loki from 'lokijs';
 
 import { Post } from './post';
 
 export class PostService {
-  private collection: loki.Collection;
+  private readonly db: Loki;
 
-  constructor(collection: loki.Collection) {
-    this.collection = collection;
+  constructor(db: Readonly<Loki>) {
+    this.db = db;
   }
 
   public getData(): Post[] {
-    return this.collection.data;
+    return this.db.getCollection<Post>('posts').data;
   }
 }
