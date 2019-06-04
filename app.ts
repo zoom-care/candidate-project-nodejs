@@ -9,6 +9,9 @@ import express, {
 	Response
 } from 'express';
 
+import { Database } from './config/database';
+
+const db = new Database();
 const app = express();
 
 // view engine setup
