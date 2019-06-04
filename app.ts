@@ -5,7 +5,7 @@ import * as path from 'path';
 import createError from 'http-errors';
 import express, { NextFunction, Request, Response } from 'express';
 
-import { AUTH_TOKEN } from './config/auth_token';
+import { AUTH_TOKEN } from './auth/auth_token';
 import { Database } from './config/database';
 import { PostService } from './post/post.service';
 import { User } from './user/user';
