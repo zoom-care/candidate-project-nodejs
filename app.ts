@@ -33,7 +33,7 @@ app.get('/', (_req: Request, res: Response) => {
 
 app.get('/user/:userId/posts', (req: Request, res: Response) => {
   const userId = +req.params.userId;
-  const userPosts = postService.getData(post => post.userId === +userId);
+  const userPosts = postService.getData(post => post.userId === userId);
   res.render('posts', { posts: userPosts });
 });
 
