@@ -1,14 +1,11 @@
 const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 
-import createError from 'http-errors';
 import * as path from 'path';
-import express, {
-	NextFunction,
-	Request,
-	Response
-} from 'express';
+import createError from 'http-errors';
+import express, { NextFunction, Request, Response } from 'express';
 
+import { AUTH_TOKEN } from './config/auth_token';
 import { Database } from './config/database';
 import { PostService } from './post/post.service';
 
@@ -38,6 +35,10 @@ app.get('/user/:userId/posts', (req: Request, res: Response) => {
 });
 
 app.delete('/comment/:commentId', (req: Request, res: Response) => {
+  if (!req.headers.authorization && req.headers.authorization !== AUTH_TOKEN) {
+    return res.status(401).json({ error: 'unauthorized' });
+  }
+
   const commentId = +req.params.commentId;
   db.get().getCollection('comments').removeWhere(comment => comment.id === commentId);
   res.send({ success: 'comment deleted' });
