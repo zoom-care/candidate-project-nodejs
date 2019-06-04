@@ -17,7 +17,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', (req, res) => {
-  res.render('index', { title: 'ZOOM+Care Candidate Code Challenge - NodeJS API' });
+  res.render('index', { title: 'ZOOM+Care Candidate Code Challenge - NodeJS API - Alex Luecke' });
 });
 
 // catch 404 and forward to error handler
