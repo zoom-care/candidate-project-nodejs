@@ -35,7 +35,7 @@ app.get('/user/:userId/posts', (req: Request, res: Response) => {
 });
 
 app.delete('/comment/:commentId', (req: Request, res: Response) => {
-  if (!req.headers.authorization && req.headers.authorization !== AUTH_TOKEN) {
+  if (!!(req.headers.authorization && req.headers.authorization === AUTH_TOKEN)) {
     return res.status(401).json({ error: 'unauthorized' });
   }
 
