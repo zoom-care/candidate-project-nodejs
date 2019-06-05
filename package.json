@@ -9,7 +9,8 @@
     "start": "npm run build && PORT=3001 DEBUG=zoom-care-candidate-project-nodejs:* node ./dist/bin/www",
     "dev": "npm run build && PORT=3001 DEBUG=zoom-care-candidate-project-nodejs:* nodemon ./dist/bin/www",
     "clean": "rm -rf dist",
-    "build": "./build.sh"
+    "build": "./build.sh",
+    "test-user-validation": "./user-auth-validation.sh"
   },
   "dependencies": {
     "body-parser": "1.19.0",
