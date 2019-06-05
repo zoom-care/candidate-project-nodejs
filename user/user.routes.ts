@@ -1,18 +1,17 @@
 import { Express, Request, Response } from 'express';
 
 import { isAuthorized } from '../auth/check-auth-header';
-import { PostService } from '../post/post.service';
 import { User } from '../user/user';
+import { UserService } from './user.service';
 import { validateUser } from '../user/user-validation';
 
 export class UserRoutes {
   constructor(
     private app: Express,
-    private postService: PostService
+    private userService: UserService
   ) {
     this.app.get('/user/:userId/posts', (req: Request, res: Response) => {
-      const userId = +req.params.userId;
-      const userPosts = this.postService.getData(post => post.userId === userId);
+      const userPosts = this.userService.getPostsForUser(+req.params.userId);
       res.render('posts', { posts: userPosts });
     });
 

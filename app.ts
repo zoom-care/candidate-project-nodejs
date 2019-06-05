@@ -11,6 +11,7 @@ import { CommentRoutes } from './comment/comment.routes';
 import { Database } from './config/database';
 import { PostService } from './post/post.service';
 import { UserRoutes } from './user/user.routes';
+import { UserService } from './user/user.service';
 
 const db = new Database();
 const app = express();
@@ -25,8 +26,11 @@ app.use(express.urlencoded({ extended: false }));
 app.use((cookieParser as any)());
 app.use(cors());
 
+const postService = new PostService(db.get());
+const userService = new UserService(postService);
+
 new AppRoutes(app);
-new UserRoutes(app, new PostService(db.get()));
+new UserRoutes(app, userService);
 new CommentRoutes(app, db.get());
 
 // catch 404 and forward to error handler
