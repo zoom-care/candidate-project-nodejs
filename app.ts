@@ -1,10 +1,12 @@
 const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 
+import * as BodyParser from 'body-parser';
 import * as path from 'path';
 import cors from 'cors';
 import createError from 'http-errors';
 import express, { NextFunction, Request, Response } from 'express';
+import { errors } from 'celebrate';
 
 import { AppRoutes } from './app.routes';
 import { CommentRoutes } from './comment/comment.routes';
@@ -25,13 +27,15 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use((cookieParser as any)());
 app.use(cors());
+app.use(BodyParser.json())
+app.use(errors());
 
 const postService = new PostService(db.get());
-const userService = new UserService(postService);
+const userService = new UserService(db.get(), postService);
 
 new AppRoutes(app);
-new UserRoutes(app, userService);
 new CommentRoutes(app, db.get());
+new UserRoutes(app, userService);
 
 // catch 404 and forward to error handler
 app.use((_req: any, _res: any, next: any) => {

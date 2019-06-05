@@ -1,11 +1,22 @@
+import { celebrate, Joi } from 'celebrate';
 import { Express, Request, Response } from 'express';
 
-import { isAuthorized } from '../auth/check-auth-header';
+import { AUTH_TOKEN } from '../auth/auth-token';
 import { User } from '../user/user';
 import { UserService } from './user.service';
-import { validateUser } from '../user/user-validation';
 
 export class UserRoutes {
+  private userSchemeValidation = celebrate({
+    body: Joi.object().keys({
+      name: Joi.string().required(),
+      email: Joi.string().required(),
+      username: Joi.string().required()
+    }).unknown(true),
+    headers: Joi.object().keys({
+      authorization: Joi.string().valid(AUTH_TOKEN).required()
+    }).unknown(true)
+  });
+
   constructor(
     private app: Express,
     private userService: UserService
@@ -15,15 +26,11 @@ export class UserRoutes {
       res.render('posts', { posts: userPosts });
     });
 
-    this.app.post('/user', (req: Request, res: Response) => {
-      if (!isAuthorized(req.headers)) {
-        return res.status(401).json({ error: 'unauthorized' });
-      }
+    this.app.post('/user', this.userSchemeValidation, (req: Request, res: Response) => {
+      const newUser: Partial<User> = req.body;
 
-      const newUser: Partial<User> = req.params;
-
-      if (!validateUser(newUser)) {
-        return res.status(400).json({ error: 'could not create user' });
+      if (!this.userService.addUser(newUser)) {
+        return res.status(500).json({ status: 'error', message: 'user save failed' });
       }
 
       res.send({ success: 'user created' });
