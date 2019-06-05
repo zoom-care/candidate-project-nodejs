@@ -10,12 +10,12 @@ export class CommentRoutes {
   ) {
     this.app.delete('/comment/:commentId', (req: Request, res: Response) => {
       if (!isAuthorized(req.headers)) {
-        return res.status(401).json({ error: 'unauthorized' });
+        return res.status(401).json({ status: 'error', message: 'unauthorized' });
       }
 
       const commentId = +req.params.commentId;
       this.db.getCollection('comments').removeWhere(comment => comment.id === commentId);
-      res.send({ success: 'comment deleted' });
+      res.send({ status: 'success', message: 'comment saved' });
     });
   }
 }
