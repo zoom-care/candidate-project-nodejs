@@ -6,11 +6,13 @@
     "node": ">=10"
   },
   "scripts": {
+    "codegen": "snc swagger.yaml -o ./generated",
     "start": "PORT=3001 DEBUG=zoom-care-candidate-project-nodejs:* node ./bin/www",
     "dev": "PORT=3001 DEBUG=zoom-care-candidate-project-nodejs:* nodemon ./bin/www"
   },
   "dependencies": {
     "cookie-parser": "~1.4.3",
+    "cors": "^2.8.5",
     "debug": "~2.6.9",
     "express": "~4.16.0",
     "http-errors": "~1.6.2",
@@ -19,6 +21,7 @@
     "pug": "2.0.0-beta11"
   },
   "devDependencies": {
-    "nodemon": "^1.18.11"
+    "nodemon": "^1.18.11",
+    "swagger-node-codegen": "^1.6.3"
   }
 }

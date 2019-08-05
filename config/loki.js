@@ -28,7 +28,7 @@ module.exports = {
     const posts = db.addCollection('posts');
     const postsData = JSON.parse(fs.readFileSync(__dirname + '/../data/posts.json'));
     postsData.forEach(postData => {
-      posts.insert(postData);
+      const result = posts.insert(postData);
     });
   },
 

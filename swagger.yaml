@@ -1,0 +1,201 @@
+openapi: 3.0.1
+info:
+  title: ZoomCare Candidate Code Challenge
+  description: 'to create an API that exposes several CRUD operations over HTTP for
+    a predefined data schema. The data schema for this challenge is simple: A user
+    (which is a writer) has posts, and each post has comments.'
+  version: 1.0.0
+
+servers:
+  - url: https://localhost:3001/v1
+  - url: http://localhost:3001/v1
+
+tags:
+  - name: user
+  - name: comment
+  - name: post
+
+paths:
+  /user:
+    get:
+      tags:
+        - user
+      summary: Retrieve all users
+      operationId: findAll
+      responses:
+        200:
+          description: successful operation
+          content: {}
+        400:
+          description: Invalid postId
+          content: {}
+    post:
+      tags:
+        - user
+      summary: Create user
+      operationId: createUser
+      requestBody:
+        description: Created user object
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+        required: true
+      responses:
+        default:
+          description: successful operation
+          content: {}
+      security:
+        - bearerAuth: []
+
+  /post:
+    post:
+      tags:
+        - post
+      summary: Update a post
+      operationId: updatePost
+      requestBody:
+        description: Created user object
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Post'
+        required: true
+      responses:
+        default:
+          description: successful operation
+          content: {}
+      security:
+        - bearerAuth: []
+
+  /comment/post/{postId}:
+    get:
+      tags:
+        - comment
+      summary: Retrieve all comments associated with a user's post
+      operationId: findAllByPostId
+      parameters:
+        - name: postId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: successful operation
+          content: {}
+        400:
+          description: Invalid postId
+          content: {}
+
+  /comment/{commentId}:
+    delete:
+      tags:
+        - comment
+      summary: Delete a comment
+      operationId: deleteCommentById
+      parameters:
+        - name: commentId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: successful operation
+          content: {}
+        400:
+          description: Invalid postId
+          content: {}
+
+components:
+  schemas:
+    Comment:
+      required:
+        - body
+        - email
+        - id
+        - name
+        - postId
+      type: object
+      properties:
+        postId:
+          type: integer
+        id:
+          type: integer
+        name:
+          type: string
+        email:
+          type: string
+        body:
+          type: string
+    User:
+      required:
+        - address
+        - email
+        - id
+        - name
+        - phoneNumbers
+        - username
+        - website
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        username:
+          type: string
+        email:
+          type: string
+        address:
+          required:
+            - city
+            - geo
+            - street
+            - zipcode
+          type: object
+          properties:
+            zipcode:
+              type: string
+            geo:
+              required:
+                - lat
+                - lng
+              type: object
+              properties:
+                lng:
+                  type: string
+                lat:
+                  type: string
+            city:
+              type: string
+            street:
+              type: string
+        phoneNumbers:
+          type: array
+          items:
+            type: string
+        website:
+          type: string
+    Post:
+      required:
+        - body
+        - id
+        - title
+        - userId
+      type: object
+      properties:
+        userId:
+          type: integer
+        id:
+          type: integer
+        title:
+          type: string
+        body:
+          type: string
+
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
