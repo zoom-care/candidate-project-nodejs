@@ -6,11 +6,13 @@
     "node": ">=10"
   },
   "scripts": {
-    "start": "PORT=3001 DEBUG=zoom-care-candidate-project-nodejs:* node ./bin/www",
-    "dev": "PORT=3001 DEBUG=zoom-care-candidate-project-nodejs:* nodemon ./bin/www"
+    "start": "cross-env PORT=3001 DEBUG=zoom-care-candidate-project-nodejs:* node ./bin/www",
+    "dev": "cross-env PORT=3001 DEBUG=zoom-care-candidate-project-nodejs:* nodemon ./bin/www",
+    "debug": "cross-env PORT=3001 DEBUG=zoom-care-candidate-project-nodejs:* node --inspect --inspect-brk=5858 ./bin/www"
   },
   "dependencies": {
     "cookie-parser": "~1.4.3",
+    "cross-env": "^5.2.0",
     "debug": "~2.6.9",
     "express": "~4.16.0",
     "http-errors": "~1.6.2",

@@ -7,9 +7,13 @@
     {
       "type": "node",
       "request": "launch",
-      "name": "Candidate Project Debug",
-      "env": { "PORT": "3001", "DEBUG": "zoom-care-candidate-project-nodejs:*" },
-      "program": "${workspaceFolder}/bin/www"
+      "name": "Launch via NPM",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "run-script",
+        "debug"
+      ],
+      "port": 5858
     }
   ]
 }
