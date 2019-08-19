@@ -10,6 +10,27 @@ var app = express();
 
 // GraphQL schemas
 const rootSchema = require('./graphql/index').rootSchema;
+// Custom GraphQL Errors
+const FormatError = require('easygraphql-format-error')
+const formatError = new FormatError([
+  {
+    name: 'INVALID_EMAIL',
+    message: 'The email is not valid',
+    statusCode: '422'
+  },
+  {
+    name: 'INVALID_WEBSITE',
+    message: 'The website url is not valid',
+    statusCode: '422'
+  },
+  {
+    name: 'NOT_UNIQUE_USERNAME',
+    message: 'The username is not unique',
+    statusCode: '422'
+  },
+]);
+
+const errorName = formatError.errorName;
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -28,7 +49,11 @@ app.get('/', (req, res) => {
 app.use('/graphql', cors(), graphqlHTTP({
   schema: rootSchema,
   rootValue: global,
-  graphiql: true
+  graphiql: true,
+  context: { errorName },
+  customFormatErrorFn: (err) => {
+    return formatError.getError(err)
+  }  
 }));
 
 // catch 404 and forward to error handler

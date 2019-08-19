@@ -1,26 +1,15 @@
+# import User, InputUser from "users.graphql"
+# import Post, UpdatePost from "posts.graphql"
+
 type Query {
   comments(userId: Int!, postId: Int!): [Comment]
+  posts(userId: Int!): [Post]
 }
 
 type Mutation {
-  createUser(name: String!, username: String!, email: String!, website: String!): User
-  updatePost(id: Int!, title: String, body: String): Post
+  createUser(user: InputUser): User
+  updatePost(post: UpdatePost): Post
   deleteComment(id: Int!): Comment
-}
-
-type User {
-  id: ID!
-  name: String
-  username: String
-  email: String
-  website: String
-}
-
-type Post {
-  id: ID!
-  userId: Int!
-  title: String
-  body: String
 }
 
 type Comment {

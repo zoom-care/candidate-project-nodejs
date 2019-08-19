@@ -1,0 +1,12 @@
+input UpdatePost {
+  id: Int!
+  title: String!
+  body: String!
+}
+
+type Post {
+  id: ID!
+  userId: Int!
+  title: String!
+  body: String!
+}

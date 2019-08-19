@@ -1,0 +1,46 @@
+# Inputs
+
+input InputGeoLoc {
+  lat: Float
+  lng: Float
+}
+
+input InputAddress {
+  street: String
+  city: String
+  zipcode: String
+  geo: InputGeoLoc
+}
+
+input InputUser {
+  name: String!
+  username: String!
+  email: String!
+  address: InputAddress!
+  phoneNumbers: [String]!
+  website: String!
+}
+
+# Types
+
+type GeoLoc {
+  lat: Float
+  lng: Float
+}
+
+type Address {
+  street: String
+  city: String
+  zipcode: String
+  geo: GeoLoc
+}
+
+type User {
+  id: ID!
+  name: String!
+  username: String!
+  email: String!
+  address: Address!
+  phoneNumbers: [String]!
+  website: String!
+}

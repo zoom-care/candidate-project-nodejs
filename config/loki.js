@@ -12,6 +12,8 @@ module.exports = {
     usersData.forEach(userData => {
       users.insert(userData);
     });
+    
+    users.on('insert', function(input) { input.id = input.$loki; });
 
     /**
      * Comments

@@ -1,18 +1,18 @@
 const database = require('../config/loki').getDatabase();
-const UserInputError = require('apollo-server').UserInputError;
 
-exports.comments = (root, { userId, postId }) => {
+const comments = (root, { userId, postId }, { errorName }) => {
   let user = null, post  = null, currentComments = null;
-  const users = database.getCollection('users');
-  const posts = database.getCollection('posts');
-  const comments = database.getCollection('comments');
+  const colUsers = database.getCollection('users');
+  const colPosts = database.getCollection('posts');
+  const colComments = database.getCollection('comments');
   const validationErrors = {};
   
-  user = users.find({'id': userId })[0];
+
+  user = colUsers.findOne({'id': userId });
   if (user) {
-    post = posts.find({ 'userId': userId, "id": postId })[0];
+    post = colPosts.findOne({ 'userId': userId, "id": postId });
     if (post) {
-      currentComments = comments.find({ postId: postId });
+      currentComments = colComments.find({ postId: postId });
     }  else {
       validationErrors.postId = 'postId not found';
     }
@@ -21,11 +21,24 @@ exports.comments = (root, { userId, postId }) => {
   }
   
   if (Object.keys(validationErrors).length > 0) {
-    throw new UserInputError(
-      'Failed to get comments due to validation errors',
-      { validationErrors }
-    );
+    console.error(validationErrors);
+    throw new Error(errorName.NOT_FOUND);
   }
 
   return currentComments;
 };
+
+const deleteComment = (root, { id }, { errorName }) => {
+  const colComments = database.getCollection('comments');
+  const comment = colComments.findOne({ id });
+  
+  if (comment) {
+    colComments.remove(comment);
+    return comment;
+  } else {
+    throw new Error(errorName.NOT_FOUND);
+  }
+};
+
+exports.comments = comments;
+exports.deleteComment = deleteComment;
