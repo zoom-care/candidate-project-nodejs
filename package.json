@@ -7,7 +7,7 @@
   },
   "scripts": {
     "start": "cross-env PORT=3001 DEBUG=zoom-care-candidate-project-nodejs:* node ./bin/www",
-    "dev": "cross-env PORT=3001 DEBUG=zoom-care-candidate-project-nodejs:* nodemon ./bin/www",
+    "dev": "cross-env CUSTOM_TOKEN=abcd PORT=3001 DEBUG=zoom-care-candidate-project-nodejs:* nodemon ./bin/www",
     "debug": "cross-env PORT=3001 DEBUG=zoom-care-candidate-project-nodejs:* node --inspect --inspect-brk=5858 ./bin/www"
   },
   "dependencies": {

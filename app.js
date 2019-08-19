@@ -46,15 +46,19 @@ app.get('/', (req, res) => {
   res.render('index', { title: 'ZOOM+Care Candidate Code Challenge - NodeJS API' });
 });
 
-app.use('/graphql', cors(), graphqlHTTP({
-  schema: rootSchema,
-  rootValue: global,
-  graphiql: true,
-  context: { errorName },
-  customFormatErrorFn: (err) => {
-    return formatError.getError(err)
-  }  
-}));
+app.use('/graphql', cors(), graphqlHTTP(
+  (request, response, graphQLParams) => (
+    {
+      schema: rootSchema,
+      rootValue: global,
+      graphiql: true,
+      context: { request, errorName },
+      customFormatErrorFn: (err) => {
+        return formatError.getError(err)
+      }  
+    }
+  )
+));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

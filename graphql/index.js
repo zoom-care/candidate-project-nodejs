@@ -1,5 +1,8 @@
 const importSchema = require('graphql-import').importSchema;
 const makeExecutableSchema = require('graphql-tools').makeExecutableSchema;
+//Auth
+const authWrapper = require("./auth").authWrapper;
+
 // users
 const createUser = require('./users').createUser;
 // comments
@@ -17,9 +20,9 @@ const resolvers = {
     posts,
   },
   Mutation: {
-    createUser,
-    updatePost,
-    deleteComment
+    createUser: authWrapper(createUser),
+    updatePost: authWrapper(updatePost),
+    deleteComment: authWrapper(deleteComment)
   },
 };
  
