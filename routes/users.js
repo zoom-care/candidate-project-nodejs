@@ -17,37 +17,29 @@ const router = new express.Router();
  *      type: string
  *
  *  schemas:
- *    UserResponse:
+ *    User:
  *      type: object
  *      properties:
  *        id:
- *          type: number
- *          description: Unique user id
+ *          type: integer
  *        name:
  *          type: string
- *          description: user name
  *        username:
  *          type: string
- *          description: user username
  *        email:
  *          type: string
  *          description: user email
  *        address:
  *          type: object
- *          description: user address object
  *          properties:
  *            street:
  *              type: string
- *              description: street information
  *            city:
  *              type: string
- *              description: city information
  *            zipcode:
  *              type: string
- *              description: zipcode information
  *            geo:
  *              type: object
- *              description: user address object
  *              properties:
  *                lat:
  *                  type: string
@@ -56,27 +48,34 @@ const router = new express.Router();
  *                  type: string
  *                  description: geo longitude
  *            phoneNumbers:
- *              type: string
- *              description: zipcode information
+ *              type: array
+ *              items:
+ *                type: string
  *            website:
  *              type: string
- *              description: Customer website
  */
 
 /**
  * @swagger
  *
  * /users:
- *  get:
+ *  post:
  *    summary: Create User
  *    description: Add a new user to the users list.
+ *    requestBody:
+ *      description: User object
+ *      required: true
+ *      content:
+ *        application/json:
+ *          schema:
+ *            $ref: '#/components/schemas/User'
  *    responses:
  *      200:
  *        description: OK
  *        content:
  *          application/json; charset=UTF-8:
  *            schema:
- *             $ref: '#/components/schemas/UserResponse'
+ *             $ref: '#/components/schemas/Success'
  *      400:
  *        $ref: '#/components/responses/BadRequest'
  *      401:
@@ -86,7 +85,7 @@ const router = new express.Router();
  *      404:
  *        $ref: '#/components/responses/NotFound'
  *    security:
- *      - BearerAuth: []
+ *      - bearerAuth: []
  */
 router.post("/", userService.createUser);
 /**
@@ -112,7 +111,7 @@ router.post("/", userService.createUser);
  *      404:
  *        $ref: '#/components/responses/NotFound'
  *    security:
- *      - BearerAuth: []
+ *      - bearerAuth: []
  */
 router.get("/", userService.getAllUsers);
 

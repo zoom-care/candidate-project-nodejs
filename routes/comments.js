@@ -24,27 +24,76 @@ const router = new express.Router();
  *      type: string
  *
  *  schemas:
- *    CommentResponse:
+ *    Comment:
  *      type: object
  *      properties:
  *        userId:
- *          type: number
- *          description: Unique user id
+ *          type: integer
  *        id:
- *          type: number
- *          description: The comment id
+ *          type: integer
  *        name:
  *          type: string
- *          description: The name of the user
  *        email:
  *          type: string
- *          description: The email of the user
  *        body:
  *          type: string
- *          description: The body of the comment
+ *    CommentResponse:
+ *      type: array
+ *        $ref: '#/components/schemas/Comment'
  */
 
+/**
+ * @swagger
+ *
+ * /comments:
+ *  get:
+ *    summary: Get comments by post ID
+ *    description: Retrieve comments by a post ID.
+ *    responses:
+ *      200:
+ *        description: OK
+ *        content:
+ *          application/json; charset=UTF-8:
+ *            schema:
+ *             $ref: '#/components/schemas/CommentResponse'
+ *      400:
+ *        $ref: '#/components/responses/BadRequest'
+ *      401:
+ *        $ref: '#/components/responses/Unauthorized'
+ *      403:
+ *        $ref: '#/components/responses/Forbidden'
+ *      404:
+ *        $ref: '#/components/responses/NotFound'
+ *    security:
+ *      - bearerAuth: []
+ */
 router.get("/post/:postId", commentService.getCommentsByPostId);
+
+/**
+ * @swagger
+ *
+ * /comments:
+ *  delete:
+ *    summary: Delete user
+ *    description: Remove a user by their ID.
+ *    responses:
+ *      200:
+ *        description: OK
+ *        content:
+ *          application/json; charset=UTF-8:
+ *            schema:
+ *             $ref: '#/components/schemas/Success'
+ *      400:
+ *        $ref: '#/components/responses/BadRequest'
+ *      401:
+ *        $ref: '#/components/responses/Unauthorized'
+ *      403:
+ *        $ref: '#/components/responses/Forbidden'
+ *      404:
+ *        $ref: '#/components/responses/NotFound'
+ *    security:
+ *      - bearerAuth: []
+ */
 router.delete("/:commentId", commentService.deleteCommentById);
 
 module.exports = router;

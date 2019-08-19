@@ -7,8 +7,8 @@ const router = new express.Router();
  * @swagger
  *
  * components:
- *  parameters:
- *    postId:
+ *   parameters:
+ *     postId:
  *     name: postId
  *     description: The post id number.
  *     in: path
@@ -17,23 +17,53 @@ const router = new express.Router();
  *      type: string
  *
  *  schemas:
- *    PostResponse:
+ *    Post:
  *      type: object
  *      properties:
  *        userId:
- *          type: number
- *          description: Unique user id
+ *          type: integer
  *        id:
- *          type: number
- *          description: The post id
+ *          type: integer
  *        title:
  *          type: string
- *          description: The title of the post
  *        body:
  *          type: string
- *          description: The body of the post
  */
 
+/**
+ * @swagger
+ *
+ * /users:
+ *  post:
+ *    summary: Update Post
+ *    description: Update a post with an ID.
+ *    parameters:
+ *      - $ref: '#/components/parameters/postId'
+ *    requestBody:
+ *      description: Post object
+ *      required: true
+ *      content:
+ *        application/json:
+ *          schema:
+ *            $ref: '#/components/schemas/Post'
+ *    responses:
+ *      200:
+ *        description: OK
+ *        content:
+ *          application/json; charset=UTF-8:
+ *            schema:
+ *             $ref: '#/components/schemas/Success'
+ *      400:
+ *        $ref: '#/components/responses/BadRequest'
+ *      401:
+ *        $ref: '#/components/responses/Unauthorized'
+ *      403:
+ *        $ref: '#/components/responses/Forbidden'
+ *      404:
+ *        $ref: '#/components/responses/NotFound'
+ *    security:
+ *      - bearerAuth: []
+ */
 router.post("/update/:postId", postService.updatePost);
 
 module.exports = router;

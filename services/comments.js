@@ -4,8 +4,11 @@ const { HTTP_OK, HTTP_CONFLICT } = require("./constants");
 
 const getCommentsByPostId = async ({ params: { postId } }, res) => {
   console.log("postId", postId);
-  if (!postId) {
-    res.status(HTTP_CONFLICT).send("Post ID cannot be null or empty");
+  if (isNaN(postId)) {
+    res.status(HTTP_CONFLICT).send({
+      errorType: HTTP_CONFLICT,
+      message: "Post ID must be a valid number"
+    });
   } else {
     const comments = db.getCollection("comments");
     const normalizedPostId = parseInt(postId, 10);
@@ -17,7 +20,10 @@ const getCommentsByPostId = async ({ params: { postId } }, res) => {
 
 const deleteCommentById = async ({ params: { commentId } }, res) => {
   if (!commentId) {
-    res.status(HTTP_CONFLICT).send("Comment ID cannot be null or empty");
+    res.status(HTTP_CONFLICT).send({
+      errorType: HTTP_CONFLICT,
+      message: "Comment ID must be a valid number"
+    });
   } else {
     const comments = db.getCollection("comments");
     const normalizedCommentId = parseInt(commentId, 10);

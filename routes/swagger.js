@@ -3,20 +3,22 @@
  *
  * components:
  *  securitySchemes:
- *    BearerAuth:
+ *    bearerAuth:
  *      type: http
  *      scheme: bearer
- *      bearerFormat: JWT
  *
  *  schemas:
+ *    Success:
+ *      type: object
+ *      properties:
+ *        message:
+ *          type: string
  *    Error:
  *      type: object
  *      properties:
  *        message:
  *          type: string
  *        errorType:
- *          type: string
- *        stack:
  *          type: string
  *
  *  responses:
