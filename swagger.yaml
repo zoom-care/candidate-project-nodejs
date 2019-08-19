@@ -1,0 +1,170 @@
+components:
+  parameters:
+    postId:
+      name: postId
+      description: The post id number.
+      in: path
+      required: true
+      schema:
+        type: string
+    commentId:
+      name: commentId
+      description: The comment id number.
+      in: path
+      required: true
+      schema:
+        type: string
+    accountNumber:
+      name: accountNumber
+      description: The SAP account number.
+      in: path
+      required: true
+      schema:
+        type: string
+  schemas:
+    CommentResponse:
+      type: object
+      properties:
+        userId:
+          type: number
+          description: Unique user id
+        id:
+          type: number
+          description: The comment id
+        name:
+          type: string
+          description: The name of the user
+        email:
+          type: string
+          description: The email of the user
+        body:
+          type: string
+          description: The body of the comment
+    PostResponse:
+      type: object
+      properties:
+        userId:
+          type: number
+          description: Unique user id
+        id:
+          type: number
+          description: The post id
+        title:
+          type: string
+          description: The title of the post
+        body:
+          type: string
+          description: The body of the post
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+        errorType:
+          type: string
+        stack:
+          type: string
+    UserResponse:
+      type: object
+      properties:
+        id:
+          type: number
+          description: Unique user id
+        name:
+          type: string
+          description: user name
+        username:
+          type: string
+          description: user username
+        email:
+          type: string
+          description: user email
+        address:
+          type: object
+          description: user address object
+          properties:
+            street:
+              type: string
+              description: street information
+            city:
+              type: string
+              description: city information
+            zipcode:
+              type: string
+              description: zipcode information
+            geo:
+              type: object
+              description: user address object
+              properties:
+                lat:
+                  type: string
+                  description: geo latitude
+                lng:
+                  type: string
+                  description: geo longitude
+            phoneNumbers:
+              type: string
+              description: zipcode information
+            website:
+              type: string
+              description: Customer website
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  responses:
+    NotFound:
+      description: The specified resource was not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Forbidden:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: Candidate Project
+  description: REST services to serve the experience
+servers:
+  - url: 'https://localhost:3001/v1'
+paths:
+  /users:
+    get:
+      summary: Get All Users
+      description: Retrieve all users.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json; charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/UserResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - BearerAuth: []
+tags: []
