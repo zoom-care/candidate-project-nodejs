@@ -54,8 +54,10 @@ app.use('/graphql', cors(), graphqlHTTP(
       graphiql: true,
       context: { request, errorName },
       customFormatErrorFn: (err) => {
-        return formatError.getError(err)
-      }  
+        let currErr = formatError.getError(err);
+        response.status(currErr.statusCode); // NOTE: Not supposed to do
+        return currErr;
+      }
     }
   )
 ));
