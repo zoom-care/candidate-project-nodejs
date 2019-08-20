@@ -21,9 +21,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors());
 
 app.use(function(req, res, next) {
-  // if (!req.headers.authorization) {
-  //   res.status(HTTP_UNAUTHORIZED).send("Unauthorized");
-  // }
+  if (!req.headers.authorization) {
+    res.status(HTTP_UNAUTHORIZED).send('Unauthorized');
+  }
   res.setHeader('Content-Type', 'application/json');
   res.header('Access-Control-Allow-Origin', '*');
   res.header(
