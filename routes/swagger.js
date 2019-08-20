@@ -1,6 +1,11 @@
 /**
  * @swagger
  *
+ * tags:
+ *   - name: comments
+ *   - name: posts
+ *   - name: users
+ *
  * components:
  *  securitySchemes:
  *    bearerAuth:

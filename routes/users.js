@@ -28,7 +28,6 @@ const router = new express.Router();
  *          type: string
  *        email:
  *          type: string
- *          description: user email
  *        address:
  *          type: object
  *          properties:
@@ -47,13 +46,46 @@ const router = new express.Router();
  *                lng:
  *                  type: string
  *                  description: geo longitude
- *            phoneNumbers:
- *              type: array
- *              items:
- *                type: string
- *            website:
- *              type: string
+ *        phoneNumbers:
+ *          type: array
+ *          items:
+ *            type: string
+ *        website:
+ *          type: string
+ *    UserResponse:
+ *      type: array
+ *      items:
+ *        $ref: '#/components/schemas/User'
  */
+
+/**
+ * @swagger
+ *
+ * /users:
+ *  get:
+ *    summary: Get All Users
+ *    description: Retrieve all users.
+ *    tags:
+ *      - users
+ *    responses:
+ *      200:
+ *        description: OK
+ *        content:
+ *          application/json; charset=UTF-8:
+ *            schema:
+ *             $ref: '#/components/schemas/UserResponse'
+ *      400:
+ *        $ref: '#/components/responses/BadRequest'
+ *      401:
+ *        $ref: '#/components/responses/Unauthorized'
+ *      403:
+ *        $ref: '#/components/responses/Forbidden'
+ *      404:
+ *        $ref: '#/components/responses/NotFound'
+ *    security:
+ *      - bearerAuth: []
+ */
+router.get("/", userService.getAllUsers);
 
 /**
  * @swagger
@@ -62,6 +94,8 @@ const router = new express.Router();
  *  post:
  *    summary: Create User
  *    description: Add a new user to the users list.
+ *    tags:
+ *      - users
  *    requestBody:
  *      description: User object
  *      required: true
@@ -88,31 +122,5 @@ const router = new express.Router();
  *      - bearerAuth: []
  */
 router.post("/", userService.createUser);
-/**
- * @swagger
- *
- * /users:
- *  get:
- *    summary: Get All Users
- *    description: Retrieve all users.
- *    responses:
- *      200:
- *        description: OK
- *        content:
- *          application/json; charset=UTF-8:
- *            schema:
- *             $ref: '#/components/schemas/UserResponse'
- *      400:
- *        $ref: '#/components/responses/BadRequest'
- *      401:
- *        $ref: '#/components/responses/Unauthorized'
- *      403:
- *        $ref: '#/components/responses/Forbidden'
- *      404:
- *        $ref: '#/components/responses/NotFound'
- *    security:
- *      - bearerAuth: []
- */
-router.get("/", userService.getAllUsers);
 
 module.exports = router;

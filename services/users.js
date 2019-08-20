@@ -1,6 +1,6 @@
 const db = require("../config/loki").getDatabase();
 
-const { HTTP_OK, HTTP_CONFLICT } = require("./constants");
+const { HTTP_OK, HTTP_CONFLICT } = require("../util/constants");
 
 const getAllUsers = async (req, res) => {
   const users = db.getCollection("users");
@@ -16,7 +16,7 @@ const createUser = async ({ body }, res) => {
     res.status(HTTP_CONFLICT).send(`User email ${body.email} already exists`);
   } else {
     const result = users.insert(body);
-    res.status(HTTP_OK).send("User created");
+    res.status(HTTP_OK).send({ message: "User created" });
   }
 };
 

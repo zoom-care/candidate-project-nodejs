@@ -1,15 +1,15 @@
 components:
   parameters:
-    postId:
-      name: postId
-      description: The post id number.
+    commentId:
+      name: comment id
+      description: The comment id number.
       in: path
       required: true
       schema:
         type: string
-    commentId:
-      name: commentId
-      description: The comment id number.
+    postId:
+      name: post id
+      description: The post id number.
       in: path
       required: true
       schema:
@@ -22,39 +22,43 @@ components:
       schema:
         type: string
   schemas:
-    CommentResponse:
+    Comment:
       type: object
       properties:
         userId:
-          type: number
-          description: Unique user id
+          type: integer
         id:
-          type: number
-          description: The comment id
+          type: integer
         name:
           type: string
-          description: The name of the user
         email:
           type: string
-          description: The email of the user
         body:
           type: string
-          description: The body of the comment
-    PostResponse:
+    CommentResponse:
+      type: array
+      items:
+        $ref: '#/components/schemas/Comment'
+    Post:
       type: object
       properties:
         userId:
-          type: number
-          description: Unique user id
+          type: integer
         id:
-          type: number
-          description: The post id
+          type: integer
         title:
           type: string
-          description: The title of the post
         body:
           type: string
-          description: The body of the post
+    PostsResponse:
+      type: array
+      items:
+        $ref: '#/components/schemas/Post'
+    Success:
+      type: object
+      properties:
+        message:
+          type: string
     Error:
       type: object
       properties:
@@ -62,39 +66,28 @@ components:
           type: string
         errorType:
           type: string
-        stack:
-          type: string
-    UserResponse:
+    User:
       type: object
       properties:
         id:
-          type: number
-          description: Unique user id
+          type: integer
         name:
           type: string
-          description: user name
         username:
           type: string
-          description: user username
         email:
           type: string
-          description: user email
         address:
           type: object
-          description: user address object
           properties:
             street:
               type: string
-              description: street information
             city:
               type: string
-              description: city information
             zipcode:
               type: string
-              description: zipcode information
             geo:
               type: object
-              description: user address object
               properties:
                 lat:
                   type: string
@@ -102,69 +95,211 @@ components:
                 lng:
                   type: string
                   description: geo longitude
-            phoneNumbers:
-              type: string
-              description: zipcode information
-            website:
-              type: string
-              description: Customer website
+        phoneNumbers:
+          type: array
+          items:
+            type: string
+        website:
+          type: string
+    UserResponse:
+      type: array
+      items:
+        $ref: '#/components/schemas/User'
   securitySchemes:
-    BearerAuth:
+    bearerAuth:
       type: http
       scheme: bearer
-      bearerFormat: JWT
   responses:
     NotFound:
       description: The specified resource was not found
       content:
         application/json:
           schema:
-            $ref: "#/components/schemas/Error"
+            $ref: '#/components/schemas/Error'
     Unauthorized:
       description: Unauthorized
       content:
         application/json:
           schema:
-            $ref: "#/components/schemas/Error"
+            $ref: '#/components/schemas/Error'
     BadRequest:
       description: Bad Request
       content:
         application/json:
           schema:
-            $ref: "#/components/schemas/Error"
+            $ref: '#/components/schemas/Error'
     Forbidden:
       description: Forbidden
       content:
         application/json:
           schema:
-            $ref: "#/components/schemas/Error"
+            $ref: '#/components/schemas/Error'
 openapi: 3.0.0
 info:
   version: 1.0.0
   title: Candidate Project
   description: REST services to serve the experience
 servers:
-  - url: "https://localhost:3001/v1"
+  - url: 'https://localhost:3001/v1'
 paths:
-  /users:
+  '/comments/post/:postId':
     get:
-      summary: Get All Users
-      description: Retrieve all users.
+      summary: Get comments by post ID
+      description: Retrieve comments by a post ID.
+      tags:
+        - comments
+      parameters:
+        - $ref: '#/components/parameters/postId'
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json; charset=UTF-8:
               schema:
-                $ref: "#/components/schemas/UserResponse"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "403":
-          $ref: "#/components/responses/Forbidden"
-        "404":
-          $ref: "#/components/responses/NotFound"
+                $ref: '#/components/schemas/CommentResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
       security:
-        - basicAuth: []
-tags: []
+        - bearerAuth: []
+  '/comments/:commentId':
+    delete:
+      summary: Delete user
+      description: Remove a user by their ID.
+      tags:
+        - comments
+      parameters:
+        - $ref: '#/components/parameters/commentId'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json; charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/Success'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - bearerAuth: []
+  /posts:
+    get:
+      summary: Get All Posts
+      description: Retrieve all posts.
+      tags:
+        - posts
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json; charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/PostsResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - bearerAuth: []
+  '/posts/update/:postId':
+    post:
+      summary: Update Post
+      description: Update a post with an ID.
+      tags:
+        - posts
+      parameters:
+        - $ref: '#/components/parameters/postId'
+      requestBody:
+        description: Post object
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Post'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json; charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/Success'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - bearerAuth: []
+  /users:
+    get:
+      summary: Get All Users
+      description: Retrieve all users.
+      tags:
+        - users
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json; charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/UserResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - bearerAuth: []
+    post:
+      summary: Create User
+      description: Add a new user to the users list.
+      tags:
+        - users
+      requestBody:
+        description: User object
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json; charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/Success'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - bearerAuth: []
+tags:
+  - name: comments
+  - name: posts
+  - name: users

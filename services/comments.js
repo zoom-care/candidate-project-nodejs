@@ -1,9 +1,8 @@
 const db = require("../config/loki").getDatabase();
 
-const { HTTP_OK, HTTP_CONFLICT } = require("./constants");
+const { HTTP_OK, HTTP_CONFLICT } = require("../util/constants");
 
 const getCommentsByPostId = async ({ params: { postId } }, res) => {
-  console.log("postId", postId);
   if (isNaN(postId)) {
     res.status(HTTP_CONFLICT).send({
       errorType: HTTP_CONFLICT,
@@ -33,7 +32,7 @@ const deleteCommentById = async ({ params: { commentId } }, res) => {
       .find({ id: normalizedCommentId })
       .remove();
 
-    res.status(HTTP_OK).send(`Comment ${commentId} deleted`);
+    res.status(HTTP_OK).send({ message: `Comment ${commentId} deleted` });
   }
 };
 

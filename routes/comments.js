@@ -8,20 +8,13 @@ const router = new express.Router();
  *
  * components:
  *  parameters:
- *    postId:
- *     name: postId
- *     description: The post id number.
- *     in: path
- *     required: true
- *     schema:
- *      type: string
- *    commentId:
- *     name: commentId
- *     description: The comment id number.
- *     in: path
- *     required: true
- *     schema:
- *      type: string
+ *     commentId:
+ *       name: comment id
+ *       description: The comment id number.
+ *       in: path
+ *       required: true
+ *       schema:
+ *         type: string
  *
  *  schemas:
  *    Comment:
@@ -39,16 +32,21 @@ const router = new express.Router();
  *          type: string
  *    CommentResponse:
  *      type: array
+ *      items:
  *        $ref: '#/components/schemas/Comment'
  */
 
 /**
  * @swagger
  *
- * /comments:
+ * /comments/post/:postId:
  *  get:
  *    summary: Get comments by post ID
  *    description: Retrieve comments by a post ID.
+ *    tags:
+ *      - comments
+ *    parameters:
+ *      - $ref: '#/components/parameters/postId'
  *    responses:
  *      200:
  *        description: OK
@@ -72,10 +70,14 @@ router.get("/post/:postId", commentService.getCommentsByPostId);
 /**
  * @swagger
  *
- * /comments:
+ * /comments/:commentId:
  *  delete:
  *    summary: Delete user
  *    description: Remove a user by their ID.
+ *    tags:
+ *      - comments
+ *    parameters:
+ *      - $ref: '#/components/parameters/commentId'
  *    responses:
  *      200:
  *        description: OK
