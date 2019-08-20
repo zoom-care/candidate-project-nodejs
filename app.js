@@ -1,12 +1,11 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
-var cors = require('cors');
-const pathToSwaggerUi = require('swagger-ui-dist').absolutePath();
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
+const cors = require('cors');
 
-var app = express();
+const app = express();
 
 const { HTTP_UNAUTHORIZED } = require('./util/constants');
 
@@ -19,7 +18,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.static(pathToSwaggerUi));
 app.use(cors());
 
 app.use(function(req, res, next) {

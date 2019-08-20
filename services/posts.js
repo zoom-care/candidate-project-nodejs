@@ -8,15 +8,17 @@ const getAllPosts = async (req, res) => {
   res.status(HTTP_OK).send(result);
 };
 
-const updatePost = async ({ body }, res) => {
-  if (!body) {
+const updatePost = async ({ params: { postId }, body }, res) => {
+  if (isNaN(postId)) {
     res.status(HTTP_CONFLICT).send({
       errorType: HTTP_CONFLICT,
-      message: 'Body cannot be null or empty'
+      message: 'Post ID must be a valid number'
     });
   } else {
     const posts = db.getCollection('posts');
-    const current = await posts.find({ id: body.postId })[0];
+    const normalizedPostId = parseInt(postId, 10);
+    const current = await posts.find({ id: normalizedPostId })[0];
+    console.log('current', current, normalizedPostId);
     const result = posts.update(Object.assign(current, body));
 
     res.status(HTTP_OK).send({ message: 'Post updated' });
