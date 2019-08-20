@@ -1,5 +1,5 @@
-const express = require("express");
-const commentService = require("../services/comments");
+const express = require('express');
+const commentService = require('../services/comments');
 
 const router = new express.Router();
 
@@ -65,7 +65,7 @@ const router = new express.Router();
  *    security:
  *      - bearerAuth: []
  */
-router.get("/post/:postId", commentService.getCommentsByPostId);
+router.get('/post/:postId', commentService.getCommentsByPostId);
 
 /**
  * @swagger
@@ -96,6 +96,6 @@ router.get("/post/:postId", commentService.getCommentsByPostId);
  *    security:
  *      - bearerAuth: []
  */
-router.delete("/:commentId", commentService.deleteCommentById);
+router.delete('/:commentId', commentService.deleteCommentById);
 
 module.exports = router;

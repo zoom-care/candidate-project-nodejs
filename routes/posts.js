@@ -1,5 +1,5 @@
-const express = require("express");
-const postService = require("../services/posts");
+const express = require('express');
+const postService = require('../services/posts');
 
 const router = new express.Router();
 
@@ -61,7 +61,7 @@ const router = new express.Router();
  *    security:
  *      - bearerAuth: []
  */
-router.get("/", postService.getAllPosts);
+router.get('/', postService.getAllPosts);
 
 /**
  * @swagger
@@ -99,6 +99,6 @@ router.get("/", postService.getAllPosts);
  *    security:
  *      - bearerAuth: []
  */
-router.post("/update/:postId", postService.updatePost);
+router.post('/update/:postId', postService.updatePost);
 
 module.exports = router;

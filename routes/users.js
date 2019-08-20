@@ -1,5 +1,5 @@
-const express = require("express");
-const userService = require("../services/users");
+const express = require('express');
+const userService = require('../services/users');
 
 const router = new express.Router();
 
@@ -85,7 +85,7 @@ const router = new express.Router();
  *    security:
  *      - bearerAuth: []
  */
-router.get("/", userService.getAllUsers);
+router.get('/', userService.getAllUsers);
 
 /**
  * @swagger
@@ -121,6 +121,6 @@ router.get("/", userService.getAllUsers);
  *    security:
  *      - bearerAuth: []
  */
-router.post("/", userService.createUser);
+router.post('/', userService.createUser);
 
 module.exports = router;

@@ -55,12 +55,12 @@
  */
 module.exports = {
   components: {},
-  openapi: "3.0.0",
-  apis: ["routes/*.js"],
+  openapi: '3.0.0',
+  apis: ['routes/*.js'],
   info: {
-    version: "1.0.0",
-    title: "Candidate Project",
-    description: "REST services to serve the experience"
+    version: '1.0.0',
+    title: 'Candidate Project',
+    description: 'REST services to serve the experience'
   },
-  servers: [{ url: "https://localhost:3001/v1" }]
+  servers: [{ url: 'https://localhost:3001/v1' }]
 };
