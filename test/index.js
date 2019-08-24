@@ -20,4 +20,33 @@ describe("API Routes", ()=>{
         })
     });
 
+    it("Creates a new user", done => {
+      chai.request(server)
+      .post("/api/users/")
+      .send(
+        {
+          "name": "Aaron Eiche",
+          "username": "aeiche",
+          "email": "aeiche@aaroneiche.com",
+          "address": {
+              "street": "12345 SW North",
+              "city": "Portland",
+              "zipcode": "97213",
+              "geo": {
+                  "lat": "-37.3159",
+                  "lng": "81.1496"
+              }
+          },
+          "phoneNumbers": [
+              "1-503-334-9164"
+          ],
+          "website": "aeiche.com"
+      })
+      .end(function(err,res){
+          res.should.have.status(201);
+          res.text.should.equal("/api/articles/11");
+          done();
+      })
+    })
+
  });
