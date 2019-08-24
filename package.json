@@ -9,6 +9,7 @@
     "start": "cross-env PORT=3001 DEBUG=zoom-care-candidate-project-nodejs:* node ./bin/www",
     "dev": "cross-env PORT=3001 DEBUG=zoom-care-candidate-project-nodejs:* nodemon ./bin/www",
     "debug": "cross-env PORT=3001 DEBUG=zoom-care-candidate-project-nodejs:* node --inspect --inspect-brk=5858 ./bin/www"
+    "test": "mocha"
   },
   "dependencies": {
     "cookie-parser": "~1.4.3",
@@ -21,6 +22,9 @@
     "pug": "2.0.0-beta11"
   },
   "devDependencies": {
+    "chai": "^4.2.0",
+    "chai-http": "^4.3.0",
+    "mocha": "^6.2.0",
     "nodemon": "^1.18.11"
   }
 }
