@@ -4,6 +4,8 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
+var api = require('./api');
+
 var app = express();
 
 // view engine setup
@@ -19,6 +21,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.get('/', (req, res) => {
   res.render('index', { title: 'ZOOM+Care Candidate Code Challenge - NodeJS API' });
 });
+
+app.use('/api', api);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
