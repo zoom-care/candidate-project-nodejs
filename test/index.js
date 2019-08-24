@@ -6,11 +6,12 @@ var chaiHttp = require('chai-http');
 var server = require('../app');
 
 chai.use(chaiHttp);
+let serverAddress = 'http://localhost:3001'
 
 describe("API Routes", ()=>{
 
     it("Gets all users", done=>{
-        chai.request('http://localhost:3001')
+        chai.request(serverAddress)
         .get("/api/users")
         .send()
         .end(function(err,res){
@@ -21,7 +22,7 @@ describe("API Routes", ()=>{
     });
 
     it("Creates a new user", done => {
-      chai.request(server)
+      chai.request(serverAddress)
       .post("/api/users/")
       .send(
         {
@@ -44,7 +45,7 @@ describe("API Routes", ()=>{
       })
       .end(function(err,res){
           res.should.have.status(201);
-          res.text.should.equal("/api/articles/11");
+          res.text.should.equal("/api/users/11");
           done();
       })
     })
