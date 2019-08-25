@@ -50,4 +50,17 @@ describe("API Routes", ()=>{
       })
     })
 
+    it("Updates a post", done => {
+      chai.request(serverAddress)
+      .patch("/api/posts/1")
+      .send({
+        title:"This is the new Title"
+      })
+      .end(function(err,res){
+        res.should.have.status(200);
+        res.text.should.equal("/api/posts/1");
+        done();
+      })
+    })
+
  });
