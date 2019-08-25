@@ -59,8 +59,16 @@ describe("API Routes", ()=>{
       .end(function(err,res){
         res.should.have.status(200);
         res.text.should.equal("/api/posts/1");
-        done();
-      })
-    })
 
+        //This will check that our change actually worked
+        return chai.request(serverAddress)
+        .get(res.text)
+        .send()
+        .end(function(err,res){
+          res.body.title.should.equal("This is the new Title");
+          done();
+
+          })
+        })
+      })
  });
