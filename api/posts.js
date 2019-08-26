@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var auth = require('./authorization');
 
 var db = require('../config/loki').getDatabase();
 
@@ -28,7 +29,7 @@ router.get('/:id', getPosts,(req,res,next) => {
   }
 })
 
-router.patch('/:id', getPosts,(req,res,next) => {
+router.patch('/:id', auth, getPosts,(req,res,next) => {
 
   let thisPost = req.posts.findOne({"id": Number(req.params.id)});  
 
