@@ -9,14 +9,14 @@ let getPosts = (req, res, next) => {
   next();
 }
 
+//Get all posts
 router.get('/', getPosts, (req,res,next) => {
-  console.log("here");
   res.status(200);
   res.json(req.posts.data);
 })
 
+//Get a specific post
 router.get('/:id', getPosts,(req,res,next) => {
-//
 
   let thisPost = req.posts.findOne({"id":Number(req.params.id)});
   
@@ -29,6 +29,7 @@ router.get('/:id', getPosts,(req,res,next) => {
   }
 })
 
+//Update a post
 router.patch('/:id', auth, getPosts,(req,res,next) => {
 
   let thisPost = req.posts.findOne({"id": Number(req.params.id)});  
