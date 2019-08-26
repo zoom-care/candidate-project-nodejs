@@ -18,8 +18,17 @@ router.get('/posts/:postId', getComments, (req,res,next) => {
   res.json(postComments);
 });
 
-router.delete('/:id', getComments, (req,res,next) => {
+//Delete a comment
+router.delete('/:id', auth, getComments, (req,res,next) => {
+  let comment = req.comments.findOne({id:Number(req.params.id)});
+  if(comment != null) {
+    req.comments.remove(comment);
+    res.status(200);
+    res.send("Deleted");
+  }else{
+    res.status(404);
+    res.send("Comment not found");
+  }
 });
-
 
 module.exports = router;

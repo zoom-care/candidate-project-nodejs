@@ -131,10 +131,35 @@ describe("API Routes", ()=>{
     it("Deletes a comment", done=>{
       chai.request(serverAddress)
       .delete("/api/comments/4")
+      .set('Authorization','Bearer Hello1234')
       .send()
       .end(function(err,res){
-        res.status(200); 
+        res.status.should.equal(200); 
         res.text.should.equal("Deleted");
+        done();
+      })
+    });
+
+    it("Fails to Delete a comment - no Auth", done=>{
+      chai.request(serverAddress)
+      .delete("/api/comments/4")
+      .send()
+      .end(function(err,res){
+        res.status.should.equal(401); 
+        res.text.should.equal("Unauthorized");
+        done();
+      })
+    });
+
+
+    it("Fails to Delete a missing comment", done=>{
+      chai.request(serverAddress)
+      .delete("/api/comments/501")
+      .set('Authorization','Bearer Hello1234')
+      .send()
+      .end(function(err,res){
+        res.status.should.equal(404); 
+        res.text.should.equal("Comment not found");
         done();
       })
     });
