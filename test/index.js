@@ -92,29 +92,41 @@ describe("API Routes", ()=>{
         res.text.should.equal("Unauthorized");
         done();
         })
-      })
+    })
 
-      it("Updates a post", done => {
-        chai.request(serverAddress)
-        .patch("/api/posts/1")
-        .set("Authorization","Bearer Test4321")
-        .send({
-          title:"This is the new Title"
-        })
+    it("Updates a post", done => {
+      chai.request(serverAddress)
+      .patch("/api/posts/1")
+      .set("Authorization","Bearer Test4321")
+      .send({
+        title:"This is the new Title"
+      })
+      .end(function(err,res){
+        res.should.have.status(200);
+        res.text.should.equal("/api/posts/1");
+
+        //This will check that our change actually worked
+        return chai.request(serverAddress)
+        .get(res.text)
+        .send()
         .end(function(err,res){
-          res.should.have.status(200);
-          res.text.should.equal("/api/posts/1");
-  
-          //This will check that our change actually worked
-          return chai.request(serverAddress)
-          .get(res.text)
-          .send()
-          .end(function(err,res){
-            res.body.title.should.equal("This is the new Title");
-            done();
-  
-            })
+          res.body.title.should.equal("This is the new Title");
+          done();
+
           })
         })
+    })
+
+    it("Gets gets all comments for a post", done=>{
+      chai.request(serverAddress)
+      .get("/api/comments/posts/1")
+      .send()
+      .end(function(err,res){
+        res.should.be.json;
+        res.body.length.should.equal(5);
+        done();
+      })
+  });
+
 
  });
