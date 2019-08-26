@@ -31,14 +31,14 @@ router.get('/:id', getPosts,(req,res,next) => {
 router.patch('/:id', getPosts,(req,res,next) => {
 
   let thisPost = req.posts.findOne({"id": Number(req.params.id)});  
-  
+
   //update the values provided.
-  thisPost.title = String(req.body.title);
-  thisPost.body = String(req.body.body);
+  thisPost.title = (req.body.title != undefined) ? String(req.body.title): thisPost.title;
+  thisPost.body = (req.body.body != undefined) ? String(req.body.body): thisPost.body;
 
   req.posts.update(thisPost);
 
-  res.send(`/posts/${req.params.id}`);
+  res.send(`/api/posts/${req.params.id}`);
   res.status(200);
 })
 
