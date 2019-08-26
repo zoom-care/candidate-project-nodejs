@@ -32,7 +32,7 @@ router.post('/', auth, getUsers,(req,res,next)=>{
   //also, lets make sure we're not duplicating.
   let emailTest = req.users.findOne({"email":String(req.body.email)});
   let usernameTest = req.users.findOne({"email":String(req.body.username)});
-  console.log(emailTest,usernameTest);
+
   if(emailTest != null || usernameTest != null) {
     res.status(400);
     res.send("Email or Username already taken");
