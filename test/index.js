@@ -126,7 +126,17 @@ describe("API Routes", ()=>{
         res.body.length.should.equal(5);
         done();
       })
-  });
+    });
 
+    it("Deletes a comment", done=>{
+      chai.request(serverAddress)
+      .delete("/api/comments/4")
+      .send()
+      .end(function(err,res){
+        res.status(200); 
+        res.text.should.equal("Deleted");
+        done();
+      })
+    });
 
  });
