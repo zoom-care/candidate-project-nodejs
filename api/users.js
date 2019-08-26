@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var auth = require('./authorization');
 
 var db = require('../config/loki').getDatabase();
 
@@ -10,12 +11,12 @@ router.get('/', (req,res,next) => {
   res.json(users.data);
 })
 
-router.post('/', (req,res,next)=>{
+router.post('/', auth ,(req,res,next)=>{
   var users = db.getCollection('users');
   users.on('insert', input=>{ input.id = input.$loki; });
   let newUser = users.insert(req.body);
   
-  
+
   res.status("201");
   res.send(`/api/users/${newUser.$loki}`);
 })
