@@ -2,8 +2,14 @@ const fs = require('fs');
 const loki = require('lokijs');
 const db = new loki('zoom-care-candidate-project-nodejs.json');
 
+let initialized = false
+
 module.exports = {
   init () {
+    if (initialized) {
+      return;
+    }
+
     /**
      * Users
      */
@@ -30,6 +36,8 @@ module.exports = {
     postsData.forEach(postData => {
       posts.insert(postData);
     });
+
+    initialized = true;
   },
 
   getDatabase () {
