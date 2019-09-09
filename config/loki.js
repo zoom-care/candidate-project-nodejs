@@ -4,10 +4,14 @@ const db = new loki('zoom-care-candidate-project-nodejs.json');
 
 module.exports = {
   init () {
+
+    console.log("Initializing loki");
+
     /**
      * Users
      */
-    const users = db.addCollection('users');
+    // const users = db.addCollection('users', {unique: ['id'] });
+    const users = db.addCollection('users', { indices: ['id']});
     const usersData = JSON.parse(fs.readFileSync(__dirname + '/../data/users.json'));
     usersData.forEach(userData => {
       users.insert(userData);
@@ -33,6 +37,7 @@ module.exports = {
   },
 
   getDatabase () {
+    console.log("Get Database");
     return db;
   }
 }

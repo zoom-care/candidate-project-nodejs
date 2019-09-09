@@ -1,0 +1,5 @@
+// Add user curl commands.
+//
+
+
+curl -X POST -H "authorization: 123" -H "Content-Type: application/json"  -d '{"id":11, "name": "Matt Dillon", "username": "mattd", "email": "mattd@someaddress.com", "address": { "street": "768 Grange Rd", "city": "Mayberry", "zipcode": "19045", "geo": { "lat": "-43.99", "lng": "-34.77"}}, "phoneNumbers": ["310-643-9876"], "website": "yadda.com"}'  http://localhost:3001/users

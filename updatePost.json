@@ -1,0 +1,4 @@
+curl -X PUT -H "authorization: 123" -d '{"title": "Some New Title", "body": "New Body"}' http://localhost:3001/posts/1
+
+
+curl -X PUT -H "authorization: 123" -H "Content-Type: application/json" -d '{"title": "Some New Title", "body": "New Body"}' http://localhost:3001/posts/1
