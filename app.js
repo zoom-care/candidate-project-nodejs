@@ -10,7 +10,7 @@ var authorizer = require('./authorizer');
 var cors = require('cors');
 var loki = require('./config/loki');
 
-
+loki.init();  // added this back since the the config/loki.js was fixed...
 var db = loki.getDatabase();
 
 var app = express();

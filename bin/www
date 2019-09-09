@@ -11,6 +11,7 @@ var http = require('http');
 /*
 * Initialize database
 */
+
 require('../config/loki').init();
 
 /**
