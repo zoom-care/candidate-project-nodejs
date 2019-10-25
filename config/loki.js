@@ -15,6 +15,7 @@ module.exports = {
      */
     const users = db.addCollection('users');
     const usersData = JSON.parse(fs.readFileSync(__dirname + '/../data/users.json'));
+    console.log(__dirname);
     usersData.forEach(userData => {
       users.insert(userData);
     });
