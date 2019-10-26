@@ -4,17 +4,38 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
+const datasource = require('./config/loki');
+datasource.init();
+
 var app = express();
 
-// view engine setup
+// Setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
-app.use(logger('dev'));
+app.use(logger('dev')); 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+// Filters
+const AuthorizationFilter = require('./filters/AuthorizationFilter');
+app.use(AuthorizationFilter);
+
+const CorsFilter = require('./filters/CorsFilter');
+app.use(CorsFilter);
+
+// Controllers
+const UsersController = require('./controllers/UsersController');
+app.use('/users', UsersController);
+
+const PostsController = require('./controllers/PostsController');
+app.use('/users/:userId/posts', PostsController);
+
+const CommentsController = require('./controllers/CommentsController');
+app.use('/users/:userId/posts/:postId/comments', CommentsController);
+
 
 app.get('/', (req, res) => {
   res.render('index', { title: 'ZOOM+Care Candidate Code Challenge - NodeJS API' });
