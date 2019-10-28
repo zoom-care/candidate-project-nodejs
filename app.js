@@ -7,6 +7,41 @@ var logger = require('morgan');
 
 const _ = require('lodash');
 
+
+class User {
+  constructor(id, name, username, email) {
+      // Error checking could be a lot more sophisticated, given time
+      if (!(name && username && email)) {
+          throw(Error('Invalid user data on creation'));
+      }
+
+      // Assuming ID is auto-incremented
+      this.id = id;
+      this.name = name;
+      this.username = username;
+      this.email = email;
+
+      // Keeping placeholder values, for time reasons
+      this.address = {
+          "street": "123 Robin St.",
+          "city": "Overton",
+          "zipcode": "86753-0900",
+          "geo": {
+              "lat": "-37.3159",
+              "lng": "81.1496"
+          }
+      };
+      this.phoneNumbers = ["1-770-736-8031 x56442", "1-771-736-8032"];
+      this.website = "example.org";
+  }
+};
+
+
+//         _____  _     _ _____
+// |      |     | |____/    |  
+// |_____ |_____| |    \_ __|__
+//                            
+
 const { init, getDatabase } = require('./config/loki.js');
 
 // Init Loki
@@ -14,11 +49,38 @@ init();
 let db = getDatabase();
 
 var users = db.getCollection("users");
+// Handle auto increment (in principle, needs testing)
+users.on('insert', function(user) { user.id = user.$loki; });
+
 var posts = db.getCollection("posts");
 var comments = db.getCollection("comments");
 
 
-// Express
+
+// _     _ _______ _____        _____ _______ _____ _______ _______
+// |     |    |      |   |        |      |      |   |______ |______
+// |_____|    |    __|__ |_____ __|__    |    __|__ |______ ______|
+//                                                                  
+
+function onSave(err) {  
+  if (err) {
+    console.log("error : " + err);  
+  }  else {
+    console.log("database saved.");  
+  }
+}
+
+function statusResponse(message) {  
+  return {
+    'message': message
+  }
+}
+
+
+// _______ _     _  _____   ______ _______ _______ _______
+// |______  \___/  |_____] |_____/ |______ |______ |______
+// |______ _/   \_ |       |    \_ |______ ______| ______|
+// 
 
 var app = express();
 
@@ -66,38 +128,37 @@ app.get('/', (req, res) => {
 
 app.options('/api/create', cors());
 app.post('/api/create', cors(), (req, res) => {
-  console.info('POST /api/create');
+  let formUserData = null;
+  let newUser = null;
 
-  console.info('POST /api/create :: req.body = ', req.body);
+  try {
+    console.info('POST /api/create :: req.body = ', req.body);
 
-  const user = {
-    "id": 1,
-    "name": "Jean Deaux",
-    "username": "Bret",
-    "email": "Sincere@april.biz",
-    "address": {
-      "street": "Kulas Light",
-      "city": "Gwenborough",
-      "zipcode": "92998-3874",
-      "geo": {
-        "lat": "-37.3159",
-        "lng": "81.1496"
-      }
-    },
-    "phoneNumbers": ["1-770-736-8031 x56442", "1-771-736-8032"],
-    "website": "hildegard.org"
-  };
+    // TODO: Get data from form
+    formUserData = _.get(req, 'body.userData', formUserData);
 
-  // TODO: Simple validation
-  // TODO: Calculate the id (unless db handles it)
+    newUser = new User( 9999, 'Jean Deaux', 'jdeaux', 'jdeaux@example.com' );
 
-  var result = users.insert(user);
+    // console.info('POST /api/create :: newUser = ', newUser);
 
+    users.insert(newUser);
 
-  // TODO: Create via Loki
+    db.saveDatabase(onSave);
 
-  res.json(user);
+    // Development testing
+    // let addedUser = users.find({
+    //   username: 'jdeaux'
+    // });
+    // console.info('POST /api/create :: addedUser = ', addedUser);
+
+    // TODO: Report status
+    res.json(newUser);
+
+  } catch (error) {
+    console.log(error);
+  }
 });
+
 
 //  ______ _______ _______        / _______  _____  _______ _______ _______ __   _ _______ _______
 // |  ____ |______    |          /  |       |     | |  |  | |  |  | |______ | \  |    |    |______
@@ -106,21 +167,22 @@ app.post('/api/create', cors(), (req, res) => {
 
 app.options('/api/comments', cors());
 app.get('/api/comments', cors(), (req, res) => {
-  console.info('GET /api/comments');
-
   let postID = 5;
   let postComments = [];
-  let filtered = {};
 
-  filtered = users.find({
-    "postId": 5
-  });
+  try {
+    console.info('GET /api/comments :: req.body = ', req.body);
 
-  console.log(filtered);
-
-  postComments = _.get(filtered, 'data', []);
-
-  res.json(filtered);
+    postComments = comments.find({
+      "postId": postID
+    });
+  
+    // console.log(postComments);
+  
+    res.json(postComments);      
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 
@@ -129,30 +191,36 @@ app.get('/api/comments', cors(), (req, res) => {
 // |       |_____| ______|    |          /   |_____| |       |_____/ |     |    |    |______
 //                                      /                                                   
 
+// Update a post.
 app.options('/api/update', cors());
 app.post('/api/update', cors(), (req, res) => {
-  console.info('POST /api/update');
-
   let post = null;
   let id = 11;
 
-  // // Updated User
-  // const user = {
-  //   name: 'John Doe (update)',
-  // };
+  try {
+    console.info('POST /api/update :: req.body = ', req.body);
 
-  // "title": "et ea vero quia laudantium autem",
+    // "title": "et ea vero quia laudantium autem",
+  
+    // Find and update an existing document
+    post = posts.findOne({'id': id });
+    post.title = 'Caveat lector!';
+  
+    console.info('GET /api/update :: found post = ', post);
 
-  // Find and update an existing document
-  post = items.findOne({'id': id });
-  tyrfing.title = 'Caveat lector!';
-  // items.update(tyrfing);
+    // TODO: Verify update via Loki 
+    posts.update(post);
+  
+    // If these are left in, which seems proper for the application, 
+    // then nodemon restarts the database, which is less than ideal.
+    // db.saveDatabase(onSave);
 
-  posts.update(tyrfing);
-
-  // TODO: Implement update via Loki
-
-  res.json(user);
+    // Response -- TODO status report
+    res.json(user);
+      
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 
@@ -162,18 +230,36 @@ app.post('/api/update', cors(), (req, res) => {
 // |       |_____| ______|    |         /   |_____/ |______ |_____ |______    |    |______
 //                                     /                                                  
 
+// Delete a comment.
 app.options('/api/delete', cors());
 app.post('/api/delete', cors(), (req, res) => {
-  console.info('POST /api/delete');
+  try {
+    let foundComment = null;
+    let id = 25; // TODO: dev hardcode
 
-  // Updated User
-  const user = {
-    name: 'John Doe (delete)',
-  };
+    console.info('POST /api/delete');
 
-  // TODO: Implement update via Loki
+    post = comments.findOne({'id': id });
 
-  res.json(user);
+    foundComment = comments.find({'id': id });
+
+    console.info('POST /api/delete foundComment = ', foundComment);
+
+    // TODO: Implement update via Loki
+    comments.findAndRemove({'id': id});
+
+    // Dev testing
+    // foundComment = comments.find({'id': id });
+    // console.info('POST /api/delete foundComment = ', foundComment);
+
+    // If these are left in, which seems proper for the application, 
+    // then nodemon restarts the database, which is less than ideal.
+    // db.saveDatabase(onSave);
+
+    res.json(statusResponse('Comment deleted'));
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 
