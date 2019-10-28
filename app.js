@@ -14,18 +14,24 @@ const _ = require('lodash');
 // |_____|    |    __|__ |_____ __|__    |    __|__ |______ ______|
 //                                                                  
 
-function onSave(err) {  
-  if (err) {
-    console.log("error : " + err);  
-  }  else {
-    console.log("database saved.");  
-  }
-}
-
 function statusResponse(message) {  
   return {
     'message': message
   }
+}
+
+// To be user with saveDatabase (disabled because this was restarting the server)
+// Function retained for challenge transparency
+// function onSave(err) {  
+//   if (err) {
+//     console.log("error : " + err);  
+//   }  else {
+//     console.log("database saved.");  
+//   }
+// }
+
+function emailIsValid(email) {
+  return /^[^\s@\.]+@[^\s@]+\.[^\s@]+$/.test(email)
 }
 
 class User {
@@ -133,26 +139,30 @@ app.post('/api/create', cors(), (req, res) => {
   try {
     console.info('POST /api/create :: req.body = ', req.body);
 
-    // TODO: Get data from form
     formUserData = _.get(req, 'body.userData', formUserData);
 
-    newUser = new User( null, 'Jean Deaux', 'jdeaux', 'jdeaux@example.com' );
+    // Simple validation, better validation would check for unique username, etc.
+    if (formUserData && formUserData.name && formUserData.username && emailIsValid(formUserData.email)) {
+      newUser = new User( null, formUserData.name, formUserData.username, formUserData.email );
 
-    // console.info('POST /api/create :: newUser = ', newUser);
+      if (newUser) {
+        users.insert(newUser);
+      }
 
-    users.insert(newUser);
+      // If these are left in, which seems proper for the application, 
+      // then nodemon restarts the database, which is less than ideal.
+      // db.saveDatabase(onSave);
 
-    db.saveDatabase(onSave);
+      // Development testing (intentionally included for transparency)
+      // let addedUser = users.find({
+      //   username: formUserData.username
+      // });
+      // console.info('POST /api/create :: addedUser = ', addedUser);
 
-    // Development testing
-    // let addedUser = users.find({
-    //   username: 'jdeaux'
-    // });
-    // console.info('POST /api/create :: addedUser = ', addedUser);
-
-    // TODO: Report status
-    res.json(newUser);
-
+      res.json(statusResponse('User "'+formUserData.username+'" added'));
+    } else {
+      res.json(statusResponse('Invalid user data'));
+    }
   } catch (error) {
     console.log(error);
   }
@@ -172,7 +182,7 @@ app.get('/api/comments', cors(), (req, res) => {
   try {
     console.info('GET /api/comments :: req.query = ', req.query);
 
-    // GET "/api/comments?id=7"
+    // e.g. GET "/api/comments?id=7"
     postID = parseInt(_.get(req, 'query.id'));
 
     postComments = comments.find({
@@ -195,29 +205,41 @@ app.get('/api/comments', cors(), (req, res) => {
 app.options('/api/update', cors());
 app.post('/api/update', cors(), (req, res) => {
   let post = null;
-  let id = 11;
+  let newPost = null;
 
   try {
-    console.info('POST /api/update :: req.body = ', req.body);
+    newPost = _.get(req, 'body.post');
 
-    // "title": "et ea vero quia laudantium autem",
-  
-    // Find and update an existing document
-    post = posts.findOne({'id': id });
-    post.title = 'Caveat lector!';
-  
-    console.info('GET /api/update :: found post = ', post);
+    console.info('POST /api/update :: newPost = ', newPost);
 
-    // TODO: Verify update via Loki 
-    posts.update(post);
-  
-    // If these are left in, which seems proper for the application, 
-    // then nodemon restarts the database, which is less than ideal.
-    // db.saveDatabase(onSave);
+    if (newPost && newPost.id) {
+      // Find and update an existing document
+      post = posts.findOne({'id': newPost.id });
 
-    // Response -- TODO status report
-    res.json(user);
-      
+      if (post) {
+        _.merge(post, newPost);
+        // if (newPost.title) {
+        //   post.title = newPost.body;
+        // }
+        // if (newPost.body) {
+        //   post.body = newPost.body;
+        // }
+  
+        console.info('GET /api/update :: found post = ', post);
+
+        // TODO: Verify update via Loki 
+        posts.update(post);
+    
+        // Dev testing (intentionally left in for transparency)
+        let foundPost = posts.find({'id': newPost.id });
+        console.info('POST /api/delete foundPost = ', foundPost);
+
+        res.json(statusResponse('Post updated'));
+      }
+    } else {
+      res.json(statusResponse('Post update failed'));
+    }
+
   } catch (error) {
     console.log(error);
   }
@@ -235,44 +257,28 @@ app.options('/api/delete', cors());
 app.post('/api/delete', cors(), (req, res) => {
   try {
     let foundComment = null;
-    let id = 25; // TODO: dev hardcode
+    let commentID = null;
 
-    console.info('POST /api/delete');
+    commentID = _.get(req, 'body.id');
 
-    post = comments.findOne({'id': id });
+    if (commentID) {
+      console.info('POST /api/delete :: commentID = ', commentID);
 
-    foundComment = comments.find({'id': id });
+      comments.findAndRemove({'id': commentID});
+  
+      // Dev testing (intentionally left in for transparency)
+      // foundComment = comments.find({'id': commentID });
+      // console.info('POST /api/delete foundComment = ', foundComment);
+  
+      res.json(statusResponse('Comment deleted'));  
+    } else {
+      res.json(statusResponse('Comment deletion failed'));  
+    }
 
-    console.info('POST /api/delete foundComment = ', foundComment);
-
-    // TODO: Implement update via Loki
-    comments.findAndRemove({'id': id});
-
-    // Dev testing
-    // foundComment = comments.find({'id': id });
-    // console.info('POST /api/delete foundComment = ', foundComment);
-
-    // If these are left in, which seems proper for the application, 
-    // then nodemon restarts the database, which is less than ideal.
-    // db.saveDatabase(onSave);
-
-    res.json(statusResponse('Comment deleted'));
   } catch (error) {
     console.log(error);
   }
 });
-
-
-// * Create a user.
-// * Retrieve all comments associated with a user's post.
-// * Update a post.
-// * Delete a comment.
-// * Allow Cross-Origin Resource Sharing (CORS) from any domain.
-// * Provide simple validation and appropriate HTTP statuses in the response.
-// * When performing a mutation, ensure that all incoming requests for those 
-//   routes contain an authorization header. The value of this header can be 
-//   any non-empty string. If the request does not contain a header of authorization, 
-//   respond with the appropriate HTTP status code.
 
 
 // _______  ______  ______  _____   ______      _     _ _______ __   _ ______         _____ __   _  ______
