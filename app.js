@@ -154,10 +154,10 @@ app.post('/api/create', cors(), (req, res) => {
       // db.saveDatabase(onSave);
 
       // Development testing (intentionally included for transparency)
-      // let addedUser = users.find({
-      //   username: formUserData.username
-      // });
-      // console.info('POST /api/create :: addedUser = ', addedUser);
+      let addedUser = users.find({
+        username: formUserData.username
+      });
+      console.info('POST /api/create :: addedUser = ', addedUser);
 
       res.json(statusResponse('User "'+formUserData.username+'" added'));
     } else {
@@ -176,7 +176,7 @@ app.post('/api/create', cors(), (req, res) => {
 
 app.options('/api/comments', cors());
 app.get('/api/comments', cors(), (req, res) => {
-  let postID = 5;
+  let postID = null;
   let postComments = [];
 
   try {
@@ -218,13 +218,7 @@ app.post('/api/update', cors(), (req, res) => {
 
       if (post) {
         _.merge(post, newPost);
-        // if (newPost.title) {
-        //   post.title = newPost.body;
-        // }
-        // if (newPost.body) {
-        //   post.body = newPost.body;
-        // }
-  
+
         console.info('GET /api/update :: found post = ', post);
 
         // TODO: Verify update via Loki 
@@ -255,10 +249,9 @@ app.post('/api/update', cors(), (req, res) => {
 // Delete a comment.
 app.options('/api/delete', cors());
 app.post('/api/delete', cors(), (req, res) => {
-  try {
-    let foundComment = null;
-    let commentID = null;
+  let commentID = null;
 
+  try {
     commentID = _.get(req, 'body.id');
 
     if (commentID) {
@@ -267,8 +260,8 @@ app.post('/api/delete', cors(), (req, res) => {
       comments.findAndRemove({'id': commentID});
   
       // Dev testing (intentionally left in for transparency)
-      // foundComment = comments.find({'id': commentID });
-      // console.info('POST /api/delete foundComment = ', foundComment);
+      let foundComment = comments.find({'id': commentID });
+      console.info('POST /api/delete foundComment = ', foundComment);
   
       res.json(statusResponse('Comment deleted'));  
     } else {
