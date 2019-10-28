@@ -1,6 +1,51 @@
-# ZOOM+Care Candidate Code Challenge - NodeJS API
+# Glenn Peters: ZOOM+Care Candidate Code Challenge - NodeJS API
 
 ![ZOOM+Care Logo](https://avatars0.githubusercontent.com/u/48925141?s=150)
+
+Branched version of this code challenge.  I really liked working with nodemon, it saves time in API development.
+
+* All PUT commands require an authorization token (Any non-empty string).  
+* Tested with Postman
+* Tested in local site for CORS remote access
+
+
+## Sample Create request URL and JSON
+`http://localhost:3001/api/create`
+
+```{
+    "userData": {
+        "name": "Jean Deaux",
+        "username": "jdeaux",
+        "email": "jdeaux@dlwater.biz"
+    }
+}
+```
+
+## Sample Comments query
+`http://localhost:3001/api/comments?id=7`
+
+
+## Sample Update request and JSON
+`http://localhost:3001/api/update`
+
+```{
+	"post": {
+	    "id": 11,
+	    "title": "Caveat Lector!",
+	    "body": "Four score and seven years ago our fathers brought forth, upon this continent, a new nation, conceived in liberty, and dedicated to the proposition that all men are created equal."		
+	}
+}
+```
+
+## Sample Delete request and JSON
+`http://localhost:3001/api/delete`
+
+```{"id": 35 }
+```
+
+<hr>
+
+# (Original) ZOOM+Care Candidate Code Challenge - NodeJS API
 
 Welcome to the ZOOM+Care NodeJS API Candidate Code Challenge. If you are here you most likely have interest in joining the ZOOM+Care Software Engineering Team and asked to choose one of our software development challenges. If you came here on your own, you are welcome to explore the challenge and use it to sharpen your skills or prepare for future interviews.
 

@@ -62,6 +62,34 @@ class User {
   }
 };
 
+function checkAuthentication() {
+  // AUTHENTICATION
+  app.use(async (req) => {
+    try {
+        const token = req.headers.authorization;
+        // const { person } = await jwt.verify(token, SECRET)      
+        let tokenResult = null;
+
+        console.log('checkAuthorization() :: token = ', token);
+
+        // In this app, we're not mutating on GET, allow
+        if (req.method === 'GET') {
+          console.log('checkAuthorization() :: req.method (GET) = ', req.method);
+          return req.next();
+        }
+
+        // Spec: The value of this header can be any non-empty string.
+        if ((typeof token !== 'string') || !(token)) {
+          tokenResult = createError(401);
+        }
+          
+        return req.next(tokenResult)
+    } catch (e) {
+        return req.next()
+    }
+  });
+}
+
 
 //         _____  _     _ _____
 // |      |     | |____/    |  
@@ -95,34 +123,22 @@ app.set('view engine', 'pug');
 
 app.use(logger('dev'));
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// AUTHENTICATION
-app.use(async (req) => {
-  try {
-      const token = req.headers.authorization;
-      // const { person } = await jwt.verify(token, SECRET)      
-      let tokenResult = null;
-
-      console.log('checkAuthorization() :: token = ', token);
-
-      // Spec: The value of this header can be any non-empty string.
-      if ((typeof token !== 'string') || !(token)) {
-        tokenResult = createError(401);
-      }
-        
-      return req.next(tokenResult)
-  } catch (e) {
-      return req.next()
-  }
-})
-
+// CORS configuration
+// See for more:
+// https://expressjs.com/en/resources/middleware/cors.html#enabling-cors-pre-flight
+app.use(cors({origin: true, credentials: true}));
 
 app.get('/', (req, res) => {
   res.render('index', { title: 'ZOOM+Care Candidate Code Challenge - NodeJS API' });
 });
+
+// Check for authentication token
+checkAuthentication();
+
 
 /* -------------------------------------------------------------------------- */
 
@@ -180,6 +196,8 @@ app.get('/api/comments', cors(), (req, res) => {
   let postComments = [];
 
   try {
+    // Not including checkAuthorization here, although an argument could be made for it
+
     console.info('GET /api/comments :: req.query = ', req.query);
 
     // e.g. GET "/api/comments?id=7"
