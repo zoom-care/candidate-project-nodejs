@@ -12,7 +12,8 @@ Branched version of this code challenge.  I really liked working with nodemon, i
 ## Sample Create request URL and JSON
 `http://localhost:3001/api/create`
 
-```{
+```
+{
     "userData": {
         "name": "Jean Deaux",
         "username": "jdeaux",
@@ -28,7 +29,8 @@ Branched version of this code challenge.  I really liked working with nodemon, i
 ## Sample Update request and JSON
 `http://localhost:3001/api/update`
 
-```{
+```
+{
 	"post": {
 	    "id": 11,
 	    "title": "Caveat Lector!",
@@ -40,12 +42,16 @@ Branched version of this code challenge.  I really liked working with nodemon, i
 ## Sample Delete request and JSON
 `http://localhost:3001/api/delete`
 
-```{"id": 35 }
+```
+{"id": 35 }
 ```
 
 <hr>
 
-# (Original) ZOOM+Care Candidate Code Challenge - NodeJS API
+<h1 align="center">Original Instructions</h1>
+
+
+# ZOOM+Care Candidate Code Challenge - NodeJS API
 
 Welcome to the ZOOM+Care NodeJS API Candidate Code Challenge. If you are here you most likely have interest in joining the ZOOM+Care Software Engineering Team and asked to choose one of our software development challenges. If you came here on your own, you are welcome to explore the challenge and use it to sharpen your skills or prepare for future interviews.
 
