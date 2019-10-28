@@ -8,6 +8,26 @@ var logger = require('morgan');
 const _ = require('lodash');
 
 
+
+// _     _ _______ _____        _____ _______ _____ _______ _______
+// |     |    |      |   |        |      |      |   |______ |______
+// |_____|    |    __|__ |_____ __|__    |    __|__ |______ ______|
+//                                                                  
+
+function onSave(err) {  
+  if (err) {
+    console.log("error : " + err);  
+  }  else {
+    console.log("database saved.");  
+  }
+}
+
+function statusResponse(message) {  
+  return {
+    'message': message
+  }
+}
+
 class User {
   constructor(id, name, username, email) {
       // Error checking could be a lot more sophisticated, given time
@@ -54,27 +74,6 @@ users.on('insert', function(user) { user.id = user.$loki; });
 
 var posts = db.getCollection("posts");
 var comments = db.getCollection("comments");
-
-
-
-// _     _ _______ _____        _____ _______ _____ _______ _______
-// |     |    |      |   |        |      |      |   |______ |______
-// |_____|    |    __|__ |_____ __|__    |    __|__ |______ ______|
-//                                                                  
-
-function onSave(err) {  
-  if (err) {
-    console.log("error : " + err);  
-  }  else {
-    console.log("database saved.");  
-  }
-}
-
-function statusResponse(message) {  
-  return {
-    'message': message
-  }
-}
 
 
 // _______ _     _  _____   ______ _______ _______ _______
@@ -137,7 +136,7 @@ app.post('/api/create', cors(), (req, res) => {
     // TODO: Get data from form
     formUserData = _.get(req, 'body.userData', formUserData);
 
-    newUser = new User( 9999, 'Jean Deaux', 'jdeaux', 'jdeaux@example.com' );
+    newUser = new User( null, 'Jean Deaux', 'jdeaux', 'jdeaux@example.com' );
 
     // console.info('POST /api/create :: newUser = ', newUser);
 
@@ -171,14 +170,15 @@ app.get('/api/comments', cors(), (req, res) => {
   let postComments = [];
 
   try {
-    console.info('GET /api/comments :: req.body = ', req.body);
+    console.info('GET /api/comments :: req.query = ', req.query);
+
+    // GET "/api/comments?id=7"
+    postID = parseInt(_.get(req, 'query.id'));
 
     postComments = comments.find({
       "postId": postID
     });
-  
-    // console.log(postComments);
-  
+
     res.json(postComments);      
   } catch (error) {
     console.log(error);
