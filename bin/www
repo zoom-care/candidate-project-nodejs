@@ -8,12 +8,6 @@ var app = require('../app');
 var debug = require('debug')('zoom-care-candidate-project-nodejs:server');
 var http = require('http');
 
-/*
-* Initialize database
-*/
-
-require('../config/loki').init();
-
 /**
  * Get port from environment and store in Express.
  */
