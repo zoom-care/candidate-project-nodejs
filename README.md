@@ -25,15 +25,15 @@ This project was generated via the [Express Generator NPM dependency](https://ex
 
 ## Developing
 Ensure you have the latest LTS NodeJS and NPM versions installed. Preferred version is NodeJS v10.x and NPM v6.x.
-```bash
+```shell
 # Install dependencies
-npm install
+yarn install
 
 # Run in development mode with `nodemon`
-npm run dev
+yarn run dev
 
 # Optionally, run directly with `node`
-npm run start
+yarn run start
 ```
 Navigate to `localhost:3001` on your machine and the index page should be accessible. All API endpoints should also be accessible from this URL and port.
 
