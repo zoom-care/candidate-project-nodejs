@@ -24,7 +24,7 @@ The database is handled via [LokiJS](http://lokijs.org), which is, to quote thei
 This project was generated via the [Express Generator NPM dependency](https://expressjs.com/en/starter/generator.html). You can reorganize routes, controllers, etc. as you see fit.
 
 ## Developing
-Ensure you have the latest LTS NodeJS and NPM versions installed. Preferred version is NodeJS v10.x and NPM v6.x.
+Ensure you have the latest LTS NodeJS and Yarn versions installed. Preferred version is NodeJS v10.x and Yarn v1.21.1
 ```shell
 # Install dependencies
 yarn install
