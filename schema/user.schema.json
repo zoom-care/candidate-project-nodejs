@@ -1,0 +1,130 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://zoomcare.com/user.schema.json",
+  "title": "User",
+  "description": "A messaging system user",
+  "type": "object",
+  "required": [
+    "id",
+    "name",
+    "username",
+    "email"
+  ],
+  "properties": {
+    "id": {
+      "$id": "#/properties/id",
+      "type": "integer",
+      "examples": [
+        1
+      ]
+    },
+    "name": {
+      "$id": "#/properties/name",
+      "type": "string",
+      "maxLength": 128,
+      "default": "",
+      "examples": [
+        "Leanne Graham"
+      ],
+      "pattern": "^(.*)$"
+    },
+    "username": {
+      "$id": "#/properties/username",
+      "type": "string",
+      "maxLength": 32,
+      "examples": [
+        "Bret"
+      ],
+      "pattern": "^(.*)$"
+    },
+    "email": {
+      "$id": "#/properties/email",
+      "type": "string",
+      "format": "email",
+      "examples": [
+        "Sincere@april.biz"
+      ],
+      "pattern": "^(.*)$"
+    },
+    "address": {
+      "$id": "#/properties/address",
+      "type": "object",
+      "required": [
+        "street",
+        "city",
+        "zipcode"
+      ],
+      "properties": {
+        "street": {
+          "$id": "#/properties/address/properties/street",
+          "type": "string",
+          "examples": [
+            "Kulas Light"
+          ]
+        },
+        "city": {
+          "$id": "#/properties/address/properties/city",
+          "type": "string",
+          "examples": [
+            "Gwenborough"
+          ]
+        },
+        "zipcode": {
+          "$id": "#/properties/address/properties/zipcode",
+          "type": "string",
+          "examples": [
+            "92998-3874"
+          ],
+          "pattern": "^(.*)$"
+        },
+        "geo": {
+          "$id": "#/properties/address/properties/geo",
+          "type": "object",
+          "required": [
+            "lat",
+            "lng"
+          ],
+          "properties": {
+            "lat": {
+              "$id": "#/properties/address/properties/geo/properties/lat",
+              "type": "string",
+              "examples": [
+                "-37.3159"
+              ],
+              "pattern": "^(.*)$"
+            },
+            "lng": {
+              "$id": "#/properties/address/properties/geo/properties/lng",
+              "type": "string",
+              "examples": [
+                "81.1496"
+              ],
+              "pattern": "^(.*)$"
+            }
+          }
+        }
+      }
+    },
+    "phoneNumbers": {
+      "$id": "#/properties/phoneNumbers",
+      "type": "array",
+      "items": {
+        "$id": "#/properties/phoneNumbers/items",
+        "type": "string",
+        "examples": [
+          "1-770-736-8031 x56442",
+          "1-771-736-8032"
+        ],
+        "pattern": "^(.*)$"
+      }
+    },
+    "website": {
+      "$id": "#/properties/website",
+      "type": "string",
+      "examples": [
+        "hildegard.org"
+      ],
+      "pattern": "^(.*)$"
+    }
+  }
+}
