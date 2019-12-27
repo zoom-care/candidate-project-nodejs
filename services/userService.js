@@ -2,25 +2,24 @@ const loki = require("lokijs")
 const { users } = require("../db")
 const _ = require("lodash")
 
-const upsertUser = function (user) {
-  // todo check if user exists
-  if (_.isEmpty(getUserById(user.id))) {
+const insertUser = function (user) {
+  try {
     users.insert(user)
-  } else {
-    users.update(user)
+  } catch (err) {
+    console.log(err.message)
   }
 }
 
 const getUserById = function (userId) {
-  return users.findOne({ 'id': userId })
+  return users.findOne({ 'id': parseInt(userId) })
 }
 
-const deleteUser = function (userId) {
-  users.findAndRemove(userId)
+const deleteUser = function (user) {
+  users.remove(user)
 }
 
 const userList = function () {
-  return users.find({ id: { $gte: 1 } });
+  return users.find({ 'id': { $ne: 0 } });
 }
 
-module.exports = { upsertUser, getUserById, deleteUser, userList }
+module.exports = { getUserById, deleteUser, userList, insertUser }

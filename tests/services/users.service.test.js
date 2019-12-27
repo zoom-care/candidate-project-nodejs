@@ -1,12 +1,14 @@
 const userService = require("../../services/userService")
 const fs = require("fs");
-const { users } = require("../../db")
+const _ = require("lodash")
+const util = require("../util")
+const db = require("../../db")
 
-function initDb() {
-  const file = process.cwd() + "/data/users.json"
-  let json = JSON.parse(fs.readFileSync(file))
+
+function initUsers() {
+  let json = util.readJsonDataFile("users.json")
   json.forEach((item) => {
-    userService.upsertUser(item)
+    userService.insertUser(item)
   })
   return json
 }
@@ -14,20 +16,36 @@ function initDb() {
 describe('test userService', () => {
   let usersJson
   beforeAll(() => {
-    usersJson = initDb();
+    db.initDb()
+    usersJson = initUsers()
   });
+
+  afterAll(() => {
+    db.resetDb()
+  })
 
   test('first item matches', () => {
     expect(userService.getUserById(1)).toBe(usersJson[0])
-  });
+  })
 
   test('count matches', () => {
     expect(userService.userList().length).toBe(usersJson.length)
   })
 
-  
+
+  test('insert', () => {
+    var aUser = _.last(usersJson)
+    aUser.id = 1000
+    aUser.username = "abc1"
+    userService.insertUser(aUser)
+    expect(userService.getUserById(1000).username).toBe("abc1")
+  })
+
   test('test delete', () => {
-    userService.deleteUser(1)
-    expect(userService.getUserById(1)).not.toBe(usersJson[0])
+    userService.deleteUser(userService.getUserById(1))
+    const aUser = userService.getUserById(1)
+    console.log("test delete")
+    console.log(aUser)
+    expect(aUser).not.toBe(usersJson[0])
   })
 })
