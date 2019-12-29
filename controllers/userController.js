@@ -1,7 +1,7 @@
 const userService = require('../services/userService')
 const _ = require("lodash")
 
-const postUser = async (req, res, next) => {
+const postUser =  (req, res, next) => {
   try {
     const user = req.body
     // TODO: validate
@@ -13,7 +13,7 @@ const postUser = async (req, res, next) => {
   }
 }
 
-const getUser = async (req, res, next) => {
+const getUser =  (req, res, next) => {
   try {
     let user = userService.getUserById(req.params.userid)
     if (_.isEmpty(user)) {

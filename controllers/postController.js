@@ -1,7 +1,7 @@
 const postService = require('../services/postService')
 const _ = require("lodash")
 
-const postPost = async (req, res, next) => {
+const postPost =  (req, res, next) => {
   try {
     const post = req.body
     // TODO: validate
@@ -9,11 +9,11 @@ const postPost = async (req, res, next) => {
     res.send(post)
   } catch (e) {
     console.log(e.message)
-    res.sendStatus(500) && next(e)
+    res.sendStatus(500)
   }
 }
 
-const putPost = async (req, res, next) => {
+const putPost =  (req, res, next) => {
   try {
     const post = req.body
     // TODO: validate
@@ -21,20 +21,20 @@ const putPost = async (req, res, next) => {
     res.send(post)
   } catch (e) {
     console.log(e.message)
-    res.sendStatus(500) && next(e)
+    res.sendStatus(500)
   }
 }
-const getPost = async (req, res, next) => {
+const getPost =  (req, res, next) => {
   try {
     let post = postService.getPostById(req.params.postid)
     if (_.isEmpty(post)) {
-      res.sendCode(404)
+      res.sendStatus(404)
     } else {
       res.send(post)
     }
   } catch (e) {
     console.log(e.message)
-    res.sendStatus(500) && next(e)
+    res.sendStatus(500)
   }
 }
 
