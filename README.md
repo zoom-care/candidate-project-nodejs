@@ -84,3 +84,9 @@ Here are some simple examples of the three data types used in this project. You 
 * Create a Fork of the repository into your personal GitHub space.
 * Implement the API requirements as described above.
 * Create a Pull Request back to the original project.
+
+## Testing
+Unit Tests: `npm run test`
+Integration Tests:
+* `npm run start`
+* `npm run test -- acceptance --runInBand`
