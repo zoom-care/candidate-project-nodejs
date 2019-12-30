@@ -7,7 +7,6 @@ const baseUrl = "http://localhost:3001/api/v1/"
 const userUrl = baseUrl + "users"
 const postUrl = baseUrl + "posts"
 const commentUrl = baseUrl + "comments"
-function getCommentUrl(postId) { return postUrl + `/${postId}/comments` }
 
 describe('test acceptance criteria', () => {
   beforeAll(async (done) => {

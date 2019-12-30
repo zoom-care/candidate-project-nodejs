@@ -44,13 +44,11 @@ const deleteComment =  (req, res, next) => {
 
 const getCommentsForPost =  (req, res, next) => {
   let postid = req.params.postid
-  console.log("inGetCommentsForPost id = " + postid)
   try {
     if (_.isEmpty(postid)) {
       res.sendStatus(400) 
     }
     let comments = commentService.getCommentsByPostId(postid)
-    console.log(comments)
     res.send(comments)
   } catch (e) {
     console.log(e.message)

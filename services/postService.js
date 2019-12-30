@@ -1,6 +1,4 @@
-const loki = require("lokijs")
 const { posts } = require("../db")
-const _ = require("lodash")
 
 const insertPost = function (post) {
     posts.insert(post)
@@ -15,11 +13,11 @@ const getPostById = function (postId) {
 }
 
 const deletePost = function (postId) {
-  users.findAndRemove(postId)
+  posts.findAndRemove(postId)
 }
 
 const getPostsByUserId = function (userId) {
-  return posts.find({ 'userId': { $eq: userId } });
+  return posts.find({ 'userId': { $eq: userId } })
 }
 
 module.exports = { insertPost, getPostById, deletePost, getPostsByUserId, updatePost }

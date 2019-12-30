@@ -5,6 +5,7 @@ const comments = require('../controllers/commentController')
 const _ = require("lodash")
 
 const router = express.Router()
+const userRoutes = require("./userRoutes")
 
 const mutatorMethods = ["PUT", "DELETE", "POST"]
 
@@ -17,8 +18,10 @@ router.use((req, res, next) => {
   }
 })
 
-router.get('/users/:userid', users.getUser)
-router.post('/users', users.postUser)
+// user route is split into it's own router to demonstrate
+// validation middleware.  Comments and posts could be handled the same way
+router.use("/users",userRoutes)
+
 
 router.get('/comments/:commentid', comments.getComment)
 router.delete('/comments/:commentid', comments.deleteComment)

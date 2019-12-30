@@ -1,4 +1,4 @@
-const fs = require("fs");
+const fs = require("fs")
 const axios = require("axios").default
 
 axios.defaults.headers.post['authorization'] = 'admin'
@@ -15,9 +15,9 @@ async function loadFileIntoCollection(fileName, postUrl) {
   let items = readJsonDataFile(fileName)
 
   await Promise.all(items.map(async (item) => {
-    return o = await postObject(postUrl, item)
-    
-  }));
+    let o = await postObject(postUrl, item)
+    return o
+  }))
   return items
 }
 

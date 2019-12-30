@@ -1,6 +1,4 @@
-const loki = require("lokijs")
 const { users } = require("../db")
-const _ = require("lodash")
 
 const insertUser = function (user) {
   try {
@@ -19,7 +17,7 @@ const deleteUser = function (user) {
 }
 
 const userList = function () {
-  return users.find({ 'id': { $ne: 0 } });
+  return users.find({ 'id': { $ne: 0 } })
 }
 
 module.exports = { getUserById, deleteUser, userList, insertUser }

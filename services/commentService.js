@@ -1,5 +1,4 @@
 const { comments } = require("../db")
-const _ = require("lodash")
 
 const insertComment = function (comment) {
   comments.insert(comment)
@@ -18,7 +17,7 @@ const deleteComment = function (comment) {
 }
 
 const getCommentsByPostId = function (postId) {
-  return comments.find({ 'postId': { '$eq': postId }});
+  return comments.find({ 'postId': { '$eq': parseInt(postId) } })
 }
 
 module.exports = { insertComment, getCommentById, deleteComment, getCommentsByPostId, updateComment }

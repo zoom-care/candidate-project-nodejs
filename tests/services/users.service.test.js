@@ -1,5 +1,4 @@
 const userService = require("../../services/userService")
-const fs = require("fs");
 const _ = require("lodash")
 const util = require("../util")
 const db = require("../../db")
@@ -18,7 +17,7 @@ describe('test userService', () => {
   beforeAll(() => {
     db.initDb()
     usersJson = initUsers()
-  });
+  })
 
   afterAll(() => {
     db.resetDb()

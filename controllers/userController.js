@@ -29,5 +29,4 @@ const getUser =  (req, res, next) => {
 
 module.exports = {
   postUser, getUser
-  // putUser, deleteUser
 }

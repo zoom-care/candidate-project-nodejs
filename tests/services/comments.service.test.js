@@ -1,6 +1,4 @@
 const commentService = require("../../services/commentService")
-const fs = require("fs");
-const _ = require("lodash")
 const util = require("../util")
 const db = require("../../db")
 

@@ -1,6 +1,4 @@
 const postService = require("../../services/postService")
-const fs = require("fs");
-const _ = require("lodash")
 const util = require("../util")
 const db = require("../../db")
 
@@ -16,7 +14,7 @@ describe('test postService', () => {
   let postsJson
   beforeAll(() => {
     postsJson = initDb()
-  });
+  })
 
   afterAll(() => {
     db.deleteCollection("posts")

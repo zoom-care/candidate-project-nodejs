@@ -14,7 +14,8 @@ This Candidate Code Challenge is geared toward developers with experience in Jav
 * Delete a comment.
 * Allow Cross-Origin Resource Sharing (CORS) from any domain.
 * Provide simple validation and appropriate HTTP statuses in the response.
-* When performing a mutation, ensure that all incoming requests for those routes contain an `authorization` header. The value of this header can be any non-empty string. If the request does not contain a header of `authorization`, respond with the appropriate HTTP status code.
+* When performing a mutation, ensure that all incoming requests for those routes contain an 
+`authorization` header. The value of this header can be any non-empty string. If the request does not contain a header of `authorization`, respond with the appropriate HTTP status code.
 
 ## Project Dependencies and Structure
 The HTTP server is created from [Express](https://expressjs.com/).
