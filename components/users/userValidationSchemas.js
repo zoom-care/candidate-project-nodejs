@@ -1,4 +1,4 @@
-var Joi = require('@hapi/joi');
+const Joi = require('@hapi/joi');
 
 const userPostSchema = Joi.object({
   name: Joi.string().required(),
@@ -10,13 +10,13 @@ const userPostSchema = Joi.object({
     zipcode: Joi.string().required(),
     geo: {
       lat: Joi.string().required(),
-      lng: Joi.string().required()
+      lng: Joi.string().required(),
     },
   },
   phoneNumbers: Joi.array().items(),
-  website: Joi.string()
+  website: Joi.string(),
 });
 
 module.exports = {
   userPostSchema,
-}
+};

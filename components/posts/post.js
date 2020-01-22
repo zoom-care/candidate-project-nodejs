@@ -1,9 +1,8 @@
 const db = require('../../db');
+
 const posts = db.getPosts();
 
-const findById = (id) => {
-  return posts.findOne({ id });
-}
+const findById = (id) => posts.findOne({ id });
 
 const updatePost = (post, query) => {
   post.title = query.title;
@@ -12,9 +11,9 @@ const updatePost = (post, query) => {
   delete updatedPost.meta;
   delete updatedPost.$loki;
   return updatedPost;
-}
+};
 
 module.exports = {
   findById,
   updatePost,
-}
+};
