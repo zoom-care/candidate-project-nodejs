@@ -11,11 +11,13 @@
     "debug": "cross-env PORT=3001 DEBUG=zoom-care-candidate-project-nodejs:* node --inspect --inspect-brk=5858 ./bin/www"
   },
   "dependencies": {
+    "@hapi/joi": "^17.1.0",
     "clean-css": ">=4.1.11",
     "cookie-parser": "~1.4.3",
     "cross-env": "^5.2.0",
     "debug": "~2.6.9",
     "express": "~4.16.0",
+    "express-joi-validation": "^4.0.3",
     "http-errors": "~1.6.2",
     "lodash": ">=4.17.13",
     "lokijs": "^1.5.6",
