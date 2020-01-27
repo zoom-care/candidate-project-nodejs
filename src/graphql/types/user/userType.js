@@ -1,6 +1,6 @@
 const { GraphQLObjectType, GraphQLList, GraphQLString, GraphQLInt } = require('graphql');
 const { GraphQLJSONObject } = require('graphql-type-json');
-const PostType = require("./post.js");
+const PostType = require("../post/postType");
 
 module.exports = UserType = new GraphQLObjectType({
     name: "User",
@@ -37,7 +37,6 @@ module.exports = UserType = new GraphQLObjectType({
         posts: {
             type: GraphQLList(PostType),
             description: "A list of the users posts.",
-
             resolve: (user, _, context) => context.db.posts.by("userId", user.id)
         },
     })

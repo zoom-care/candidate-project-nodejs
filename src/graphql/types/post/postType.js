@@ -1,5 +1,5 @@
 const { GraphQLObjectType, GraphQLList, GraphQLString, GraphQLInt } = require('graphql');
-const CommentType = require("./comment");
+const CommentType = require("../comment/commentType");
 
 module.exports = PostType = new GraphQLObjectType({
     name: "Post",
@@ -13,19 +13,18 @@ module.exports = PostType = new GraphQLObjectType({
             type: GraphQLInt,
             description: 'The users full name.',
         },
-        username: {
+        title: {
             type: GraphQLString,
             description: 'The post title.',
         },
-        email: {
+        body: {
             type: GraphQLString,
             description: 'The post body.',
         },
         comments: {
             type: GraphQLList(CommentType),
             description: "A list of the post comments.",
-
-            resolve: (post, _, context) => context.db.comments.by("postId", post.id)
+            resolve: (post, _, {db}) => db.comments.find({"postId": post.id})
         },
     })
 });

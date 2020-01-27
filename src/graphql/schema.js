@@ -1,7 +1,7 @@
 const { GraphQLObjectType } = require('graphql');
-const { createUserMutationResolver } = require('./types/user');
-const { getPostQueryResolver, updatePostMutationResolver } = require('./types/post');
-const { deleteCommentMutationResolver } = require('./types/comment');
+// const { createUserMutationResolver } = require('./types/user');
+const { getPostQueryResolver } = require('./types/post');
+// const { deleteCommentMutationResolver } = require('./types/comment');
 
 const QueryRoot = new GraphQLObjectType({
     name: 'QueryRoot',
@@ -10,16 +10,16 @@ const QueryRoot = new GraphQLObjectType({
     },
 });
 
-const MutationRoot = new GraphQLObjectType({
-    name: 'MutationRoot',
-    fields: {
-        createUser: createUserMutationResolver,
-        updatePost: updatePostMutationResolver,
-        deleteComment: deleteCommentMutationResolver,
-    },
-});
+// const MutationRoot = new GraphQLObjectType({
+//     name: 'MutationRoot',
+//     fields: {
+//         createUser: createUserMutationResolver,
+//         updatePost: updatePostMutationResolver,
+//         deleteComment: deleteCommentMutationResolver,
+//     },
+// });
 
 module.exports = {
     QueryRoot,
-    MutationRoot,
+    // MutationRoot,
 };

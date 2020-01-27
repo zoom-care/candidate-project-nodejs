@@ -2,9 +2,11 @@ const fs = require('fs');
 const loki = require('lokijs');
 const db = new loki('zoom-care-challenge');
 
-module.exports = Comments = db.addCollection('comments');
+const commentsCollection = db.addCollection('comments');
 
-const commentData = JSON.parse(fs.readFileSync(__dirname + '/../data/comments.json').toString());
-commentData.forEach((data) => {
-    Comments.insert(data);
+const commentsData = JSON.parse(fs.readFileSync(__dirname + '/../../data/comments.json').toString());
+commentsData.forEach((data) => {
+    commentsCollection.insert(data);
 });
+
+module.exports = commentsCollection;

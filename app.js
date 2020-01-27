@@ -1,11 +1,18 @@
 const express = require('express');
 const graphqlHTTP = require('express-graphql');
-const rootSchema = require("./src/graphql/schema");
+const { GraphQLSchema } = require('graphql');
 const db = require("./src/database/index");
 const app = express();
 
+const { QueryRoot, MutationRoot } = require('./src/graphql/schema');
+
+const schema = new GraphQLSchema({
+  query: QueryRoot,
+  mutation: MutationRoot,
+});
+
 app.use('/graphql', graphqlHTTP({
-  schema: rootSchema,
+  schema: schema,
   context: { db },
   graphiql: true
 }));
