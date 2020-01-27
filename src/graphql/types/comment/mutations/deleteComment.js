@@ -1,11 +1,11 @@
-const { GraphQLID } = require('graphql');
+const { GraphQLNonNull, GraphQLID } = require('graphql');
 const commentType = require('../commentType');
 
 const deleteCommentMutationResolver = {
   type: commentType,
   args: {
     id: {
-      type: GraphQLID,
+      type: GraphQLNonNull(GraphQLID),
     },
   },
   resolve: async (_, { id }, { db, request }) => {

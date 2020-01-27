@@ -1,11 +1,11 @@
-const { GraphQLID, GraphQLString } = require('graphql');
+const { GraphQLNonNull, GraphQLID, GraphQLString } = require('graphql');
 const postType = require('../postType');
 
 const updatePostMutationResolver = {
   type: postType,
   args: {
     id: {
-      type: GraphQLID,
+      type: GraphQLNonNull(GraphQLID),
     },
     userId: {
       type: GraphQLID,

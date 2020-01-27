@@ -7,7 +7,8 @@
   },
   "scripts": {
     "start": "nodemon app.js",
-    "test": "mocha test/*.test.js --timeout=10000"
+    "test": "mocha test/*.test.js --timeout=10000",
+    "prettier": "./node_modules/.bin/prettier --print-width 80 --single-quote --trailing-comma es5 --write \"{,!(node_modules)/**/}*.js\""
   },
   "dependencies": {
     "cors": "^2.8.5",
@@ -15,13 +16,13 @@
     "express-graphql": "^0.9.0",
     "graphql": "^14.5.8",
     "graphql-type-json": "^0.3.1",
-    "lokijs": "^1.5.6",
-    "prettier": "^1.19.1"
+    "lokijs": "^1.5.6"
   },
   "devDependencies": {
     "chai": "^4.2.0",
     "mocha": "^7.0.1",
     "nodemon": "^1.18.11",
+    "prettier": "^1.19.1",
     "supertest": "^4.0.2"
   }
 }
