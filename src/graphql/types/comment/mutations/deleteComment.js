@@ -17,11 +17,12 @@ const deleteCommentMutationResolver = {
       // Tried to chain find/remove, but it didn't work for some reason.
       // Had to fall back to a more verbose way of doing the removal.
       const comment = db.comments.by('id', id);
-      db.comments.remove(comment);
 
-      return {
-        id: id,
-      };
+      if (comment) {
+        db.comments.remove(comment);
+      }
+
+      return comment;
     } catch (err) {
       console.log(err);
       return err;

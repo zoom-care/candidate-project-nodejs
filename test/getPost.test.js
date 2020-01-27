@@ -5,10 +5,6 @@ const request = require('supertest');
 const app = require('../app');
 
 describe('Get Post API Tests', () => {
-    // after((done) => {
-    //     app.close(done)
-    // });
-
     it('Returns post with id = 2', (done) => {
         request(app).post('/graphql')
             .send({ query: '{ getPost(id: 2) { id userId body title comments { id postId name email body } } }'})

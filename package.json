@@ -7,7 +7,7 @@
   },
   "scripts": {
     "start": "nodemon app.js",
-    "test": "mocha test/*.test.js --timeout=10000",
+    "test": "mocha test/*.test.js --timeout=10000 --exit",
     "prettier": "./node_modules/.bin/prettier --print-width 80 --single-quote --trailing-comma es5 --write \"{,!(node_modules)/**/}*.js\""
   },
   "dependencies": {
