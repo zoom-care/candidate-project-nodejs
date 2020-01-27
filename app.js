@@ -3,6 +3,7 @@ const graphqlHTTP = require('express-graphql');
 const { GraphQLSchema } = require('graphql');
 const db = require("./src/database/index");
 const app = express();
+const cors = require('cors');
 
 const { QueryRoot, MutationRoot } = require('./src/graphql/schema');
 
@@ -11,11 +12,15 @@ const schema = new GraphQLSchema({
   mutation: MutationRoot,
 });
 
-app.use('/graphql', graphqlHTTP({
+app.use(cors()); // Allows Cross-Origin Resource Sharing (CORS) from any domain.
+app.use('/graphql', graphqlHTTP((request, response, graphQLParams) => ({
   schema: schema,
-  context: { db },
+  context: {
+    db,
+    request // Needed for checking the Authorization header for mutations.
+  },
   graphiql: true
-}));
+})));
 
 app.listen(4000);
 console.log('GraphQL API server started');
