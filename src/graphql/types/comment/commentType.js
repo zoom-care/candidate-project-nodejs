@@ -1,7 +1,7 @@
 const { GraphQLObjectType, GraphQLString, GraphQLInt } = require('graphql');
 
 module.exports = CommentType = new GraphQLObjectType({
-    name: "Comment",
+    name: "CommentType",
     description: "A comment object",
     fields: () => ({
         postId: {

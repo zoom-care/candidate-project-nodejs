@@ -3,7 +3,7 @@ const { GraphQLJSONObject } = require('graphql-type-json');
 const PostType = require("../post/postType");
 
 module.exports = UserType = new GraphQLObjectType({
-    name: "User",
+    name: "UserType",
     description: "A user object",
     fields: () => ({
         id: {
@@ -24,10 +24,10 @@ module.exports = UserType = new GraphQLObjectType({
         },
         address: {
             type: GraphQLJSONObject,
-            description: 'The users address.',
+            description: 'The users address object.',
         },
         phoneNumbers: {
-            type: [GraphQLString],
+            type: GraphQLList(GraphQLString),
             description: 'The users phone numbers.',
         },
         website: {
