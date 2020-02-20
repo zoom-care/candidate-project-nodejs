@@ -1,6 +1,9 @@
 extends layout
 
 block content
-  h1= message
-  h2= error.status
-  pre #{error.stack}
+  img(src="https://avatars0.githubusercontent.com/u/48925141?s=150")
+  h1= title
+  p Welcome to the #{title}
+  hr
+  h3= message
+  h4= error.status

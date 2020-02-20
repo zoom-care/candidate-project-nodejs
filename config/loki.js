@@ -2,7 +2,7 @@ const fs = require('fs');
 const loki = require('lokijs');
 const db = new loki('zoom-care-candidate-project-nodejs.json');
 
-let initialized = false
+var initialized = false;
 
 module.exports = {
   init () {
@@ -43,4 +43,4 @@ module.exports = {
   getDatabase () {
     return db;
   }
-}
+};
