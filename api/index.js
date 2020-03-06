@@ -47,6 +47,7 @@ router.route('/:user_id')
         next(new Error('not implemented'))
     })
 
+// these should be imported from separate files
 router.route('/:user_id/posts')
     .get((req, res, next) => {
         let result = posts.find({userId:req.user.id})
