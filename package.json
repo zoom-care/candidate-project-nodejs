@@ -8,6 +8,8 @@
   "scripts": {
     "start": "cross-env PORT=3001 DEBUG=zoom-care-candidate-project-nodejs:* node ./bin/www",
     "dev": "cross-env PORT=3001 DEBUG=zoom-care-candidate-project-nodejs:* nodemon ./bin/www",
+    "test": "jest",
+    "test:watch": "jest --watch --noStackTrace",
     "debug": "cross-env PORT=3001 DEBUG=zoom-care-candidate-project-nodejs:* node --inspect --inspect-brk=5858 ./bin/www"
   },
   "dependencies": {
@@ -24,6 +26,8 @@
     "pug": "^2.0.4"
   },
   "devDependencies": {
+    "frisby": "^2.1.2",
+    "jest": "^23.6.0",
     "nodemon": "^1.18.11"
   }
 }

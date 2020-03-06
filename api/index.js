@@ -1,7 +1,7 @@
 const express = require('express')
 const config = require('../config/loki')
 config.init()
-console.log('init database')
+console.log('init database in API')
 const db = config.getDatabase()
 
 const router = express.Router()

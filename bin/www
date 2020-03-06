@@ -13,6 +13,7 @@ var http = require('http');
 */
 
 require('../config/loki').init();
+console.log('init database in www')
 
 /**
  * Get port from environment and store in Express.
