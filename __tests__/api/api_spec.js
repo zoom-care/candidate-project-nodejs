@@ -36,7 +36,10 @@ it("should create a new user", function () {
             name: 'John Smith',
             username: 'john1'
         })
+        .inspectResponse()
         .expect('status', 201)
+        .expect('json', 'name', 'John Smith')
+        .expect('jsonTypes', 'id', Joi.number())
 })
 it("should retrieve all comments for a post", function () {
     return frisby
