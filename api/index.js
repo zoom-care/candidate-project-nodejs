@@ -2,7 +2,9 @@ const express = require('express')
 const config = require('../config/loki')
 const router = express.Router()
 const pick = require('lodash/pick')
+const isEmpty = require('lodash/isEmpty')
 const userSchema = require('./schema/users')
+const postSchema = require('./schema/posts')
 
 config.init()
 console.log('init database in API')
@@ -87,7 +89,20 @@ router.route('/:user_id/posts/:post_id')
         res.json(req.post)
     })
     .put((req, res, next) => {
-        next(new Error('not implemented'))
+        if (req.post && !isEmpty(req.body)) {
+            const { error, value} = postSchema.validate(req.body)
+            if (!!error) {
+                res.status(400).send(error.details)
+            } else {
+                let result = Object.assign(req.post, value)
+                users.update(result)
+                res.status(200).json(result)
+            }
+        } else {
+            let code = 404
+            if ((isEmpty(req.body))) code = 400
+            res.sendStatus(code)
+        }
     })
     .post((req, res, next) => {
         const allow = "GET, PUT"
@@ -123,7 +138,12 @@ router.route('/:user_id/posts/:post_id/comments/:comment_id')
             .send("Allow: " + allow)
     })
     .delete((req, res, next) => {
-        next(new Error('not implemented'))
+        if (req.comment) {
+            comments.remove(req.comment)
+            res.sendStatus(204)
+        } else {
+            res.sendStatus(404)
+        }
     })
 
 
