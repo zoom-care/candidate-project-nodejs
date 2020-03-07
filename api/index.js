@@ -48,11 +48,15 @@ router.route('/')
         const { error, value} = userSchema.validate(req.body)
         if (!!error) {
             res.status(400).send(error.details)
-        } else {
+        } else if (req.get('Auth')) {
             let result = users.insert(value)
             result.id = result.$loki
             users.update(result)
             res.status(201).json(result)
+        } else {
+            res.status(401)
+                .append('WWW-Authenticate', 'Auth')
+                .send("Unauthorized")
         }
     })
 

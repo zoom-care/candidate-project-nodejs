@@ -3,6 +3,10 @@ const Joi = require('frisby').Joi
 
 const host = 'http://localhost:3003/'
 
+////////
+// not a great way of creating a test server.  Would use a mock server before putting into production
+////////
+
 // basic library test
 it('should be a teapot', function () {
     return frisby.get('http://httpbin.org/status/418')
@@ -30,8 +34,13 @@ it("should retrieve all posts for a user", function () {
 })
 
 // requirements tests
-it("should create a new user", function () {
+it("should create a new user, if authorized", function () {
     return frisby
+        .setup({
+            request: {
+                headers: {Auth:'yes'}
+            }
+        })
         .post(host + 'users', {
             name: 'John Smith',
             username: 'john1'
@@ -39,6 +48,15 @@ it("should create a new user", function () {
         .expect('status', 201)
         .expect('json', 'name', 'John Smith')
         .expect('jsonTypes', 'id', Joi.number())
+})
+it("should NOT create a new user, if UNauthorized", function () {
+    return frisby
+        .post(host + 'users', {
+            name: 'John Smith',
+            username: 'john1'
+        })
+        .expect('status', 401)
+        .expect('header', 'WWW-Authenticate', 'Auth')
 })
 it("should retrieve all comments for a post", function () {
     return frisby
