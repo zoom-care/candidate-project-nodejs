@@ -1,5 +1,13 @@
 # ZOOM+Care Candidate Code Challenge - NodeJS API
 
+## modification to add start of simple front-end
+I took less than an hour to start adding a front end to consume the API
+* ```npm run start:server``` to run back-end on port 3001
+* ```npm run start:client``` to run front-end on localhost:1234
+* ```npm start``` to run both
+
+-----
+
 ![ZOOM+Care Logo](https://avatars0.githubusercontent.com/u/48925141?s=150)
 
 Welcome to the ZOOM+Care NodeJS API Candidate Code Challenge. If you are here you most likely have interest in joining the ZOOM+Care Software Engineering Team and asked to choose one of our software development challenges. If you came here on your own, you are welcome to explore the challenge and use it to sharpen your skills or prepare for future interviews.
