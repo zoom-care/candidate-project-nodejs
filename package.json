@@ -13,6 +13,7 @@
     "test": "npm run lint && mocha --exit ./tests/master.js"
   },
   "dependencies": {
+    "body-parser": "^1.19.0",
     "clean-css": ">=4.1.11",
     "cookie-parser": "~1.4.3",
     "cross-env": "^5.2.0",

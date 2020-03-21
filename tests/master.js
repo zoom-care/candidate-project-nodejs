@@ -1,7 +1,9 @@
 const fs = require('fs');
+const db = require('../config/loki');
 
 describe('Project Test Suite', function () {
     const start = new Date();
+    db.init();
 
     after(async () => {
         const length = new Date() - start;

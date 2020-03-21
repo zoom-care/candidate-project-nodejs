@@ -1,12 +1,11 @@
 const express = require('express');
 
+const healthRoute = require('./health');
+const userRoutes = require('./user');
+
 const api = express();
 
-/**
- * API Health Check Endpoint
- */
-api.get('/health', (req,res) => {
-    res.status(200).send('ok');
-})
+healthRoute(api);
+userRoutes(api);
 
 module.exports = api;
