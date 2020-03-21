@@ -11,6 +11,7 @@ describe('User route |', () => {
 
         const result = await request(api)
             .post('/user')
+            .set('authorization', 'foo')
             .send({
                 name: 'Test User',
                 username: 'test',
@@ -20,5 +21,28 @@ describe('User route |', () => {
         expect(result.status).to.equal(201);
         const after = users.data.some(user => user.name === 'Test User');
         expect(after).to.equal(true);
+    })
+
+    it('POST /user | fails without authorization header', async () => {
+        const result = await request(api)
+            .post('/user')
+            .send({
+                name: 'Test User',
+                username: 'test',
+                email: 'test@email.com'
+            });
+
+        expect(result.status).to.equal(401);
+
+        const result2 = await request(api)
+            .post('/user')
+            .set('authorization', '')
+            .send({
+                name: 'Test User',
+                username: 'test',
+                email: 'test@email.com'
+            });
+
+        expect(result2.status).to.equal(401);
     })
 })

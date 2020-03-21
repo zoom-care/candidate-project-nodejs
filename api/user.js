@@ -1,4 +1,5 @@
 const bodyParser = require('body-parser');
+const auth = require('../lib/auth');
 const db = require('../config/loki').getDatabase();
 
 function userRoutes(api) {
@@ -9,6 +10,7 @@ function userRoutes(api) {
      */
     api.post(
         '/user',
+        auth,
         bodyParser.json(),
         (req, res) => {
         try {
