@@ -1,12 +1,15 @@
 {
   "name": "zoom-care-candidate-project-nodejs",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "private": true,
   "engines": {
     "node": ">=10"
   },
   "scripts": {
-    "start": "cross-env PORT=3001 DEBUG=zoom-care-candidate-project-nodejs:* node ./bin/www",
+    "start:client": "parcel index.html",
+    "build": "parcel build index.html -d public",
+    "clean": "rimraf dist .cache",
+    "start:server": "cross-env PORT=3001 DEBUG=zoom-care-candidate-project-nodejs:* node ./bin/www",
     "dev": "cross-env PORT=3003 DEBUG=zoom-care-candidate-project-nodejs:* nodemon ./bin/www",
     "test": "jest",
     "test:watch": "jest --watch --noStackTrace",
@@ -28,6 +31,15 @@
   "devDependencies": {
     "frisby": "^2.1.2",
     "jest": "^23.6.0",
-    "nodemon": "^1.18.11"
-  }
+    "nodemon": "^1.18.11",
+    "@babel/polyfill": "^7.8.3",
+    "parcel-bundler": "^1.12.4",
+    "parcel-plugin-svelte": "^4.0.5",
+    "rimraf": "^3.0.2",
+    "sass": "^1.25.0",
+    "svelte": "^3.17.3"
+  },
+  "browserslist": [
+    "last 1 chrome versions"
+  ]
 }

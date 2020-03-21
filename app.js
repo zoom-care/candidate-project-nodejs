@@ -8,6 +8,7 @@ const cors = require('cors');
 const api = require('./api/index');
 
 const app = express();
+const test=1
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
