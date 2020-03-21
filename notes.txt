@@ -1,0 +1,2 @@
+in package.json:
+    "jest": "^23.6.0", -- last version that worked in Windows with TMP directory on RAMdisk
