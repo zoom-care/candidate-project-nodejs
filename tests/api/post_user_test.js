@@ -6,8 +6,8 @@ const db = require('../../config/loki').getDatabase();
 describe('User route |', () => {
     it('POST /user | creates a user', async () => {
         const users = db.getCollection('users');
-        const before = users.data.some(user => user.name === 'Test User');
-        expect(before).to.equal(false);
+        const before = users.findOne({ name: 'Test User' });
+        expect(before).to.equal(null);
 
         const result = await request(api)
             .post('/user')
@@ -19,8 +19,8 @@ describe('User route |', () => {
             });
 
         expect(result.status).to.equal(201);
-        const after = users.data.some(user => user.name === 'Test User');
-        expect(after).to.equal(true);
+        const after = users.findOne({ name: 'Test User' });
+        expect(after).to.not.equal(null);
     })
 
     it('POST /user | fails without authorization header', async () => {

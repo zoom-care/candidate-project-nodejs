@@ -10,7 +10,7 @@ function commentRoutes(api) {
         try {
             const comments = db.getCollection('comments');
             const postId = parseInt(req.params.postId);
-            const postComments = comments.data.filter(comment => comment.postId === postId);
+            const postComments = comments.find({ postId });
             return res.status(200).send(postComments);
         } catch (err) {
             console.error(err);
