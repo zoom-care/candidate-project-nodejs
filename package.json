@@ -8,7 +8,9 @@
   "scripts": {
     "start": "cross-env PORT=3001 DEBUG=zoom-care-candidate-project-nodejs:* node ./bin/www",
     "dev": "cross-env PORT=3001 DEBUG=zoom-care-candidate-project-nodejs:* nodemon ./bin/www",
-    "debug": "cross-env PORT=3001 DEBUG=zoom-care-candidate-project-nodejs:* node --inspect --inspect-brk=5858 ./bin/www"
+    "debug": "cross-env PORT=3001 DEBUG=zoom-care-candidate-project-nodejs:* node --inspect --inspect-brk=5858 ./bin/www",
+    "lint": "eslint .",
+    "test": "npm run lint && mocha --exit ./tests/master.js"
   },
   "dependencies": {
     "clean-css": ">=4.1.11",
@@ -23,6 +25,10 @@
     "pug": "^2.0.4"
   },
   "devDependencies": {
-    "nodemon": "^1.18.11"
+    "nodemon": "^1.18.11",
+    "chai": "^4.2.0",
+    "eslint": "^5.16.0",
+    "mocha": "^6.1.4",
+    "supertest": "^4.0.2"
   }
 }

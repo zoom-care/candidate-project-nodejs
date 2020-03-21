@@ -14,7 +14,7 @@ module.exports = {
      * Users
      */
     const users = db.addCollection('users');
-    const usersData = JSON.parse(fs.readFileSync(__dirname + '/../data/users.json'));
+    const usersData = JSON.parse(fs.readFileSync(`${__dirname}/../data/users.json`));
     usersData.forEach(userData => {
       users.insert(userData);
     });
@@ -23,7 +23,7 @@ module.exports = {
      * Comments
      */
     const comments = db.addCollection('comments');
-    const commentsData = JSON.parse(fs.readFileSync(__dirname + '/../data/comments.json'));
+    const commentsData = JSON.parse(fs.readFileSync(`${__dirname}/../data/comments.json`));
     commentsData.forEach(commentData => {
       comments.insert(commentData);
     });
@@ -32,7 +32,7 @@ module.exports = {
      * Posts
      */
     const posts = db.addCollection('posts');
-    const postsData = JSON.parse(fs.readFileSync(__dirname + '/../data/posts.json'));
+    const postsData = JSON.parse(fs.readFileSync(`${__dirname}/../data/posts.json`));
     postsData.forEach(postData => {
       posts.insert(postData);
     });

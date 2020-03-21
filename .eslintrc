@@ -1,0 +1,37 @@
+{
+    "parserOptions": {
+        "ecmaVersion": 2018
+    },
+    "rules": {
+        "quotes": [2, "single"],
+        "strict": [2, "never"],
+        "indent": 0,
+        "no-trailing-spaces": 2,
+        "import/prefer-default-export": 0,
+        "id-length": 0,
+        "comma-dangle": 0,
+        "new-cap": 0,
+        "func-names": 0,
+        "consistent-return": 0,
+        "no-use-before-define": 0,
+        "no-debugger": 0,
+        "spaced-comment": 0,
+        "no-console": 0,
+        "no-alert": 0,
+        "arrow-body-style": "off",
+        "camelcase": "warn",
+        "semi-style": ["error", "last"],
+        "no-unused-vars": "error",
+        "quote-props": ["error","as-needed"],
+        "no-multiple-empty-lines": ["error", { "max": 1, "maxBOF": 0 }],
+        "eol-last": ["error", "always"],
+        "prefer-template":"error",
+        "no-multi-spaces":"error",
+        "object-curly-spacing": ["error", "always"],
+        "keyword-spacing":["error", { "before": true }],
+        "computed-property-spacing": ["error", "never"],
+        "array-bracket-spacing": ["error", "always"],
+        "template-curly-spacing": ["error", "never"],
+        "no-var": "error"
+    }
+}
