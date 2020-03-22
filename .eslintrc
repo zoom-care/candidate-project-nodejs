@@ -1,4 +1,7 @@
 {
+    "env": {
+        "node": true
+    },
     "parserOptions": {
         "ecmaVersion": 2018
     },
@@ -32,6 +35,7 @@
         "computed-property-spacing": ["error", "never"],
         "array-bracket-spacing": ["error", "always"],
         "template-curly-spacing": ["error", "never"],
-        "no-var": "error"
+        "no-var": "error",
+        "no-undef": "error"
     }
 }
