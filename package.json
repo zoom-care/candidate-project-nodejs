@@ -1,6 +1,6 @@
 {
   "name": "zoom-care-candidate-project-nodejs",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "private": true,
   "engines": {
     "node": ">=10"
