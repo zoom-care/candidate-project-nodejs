@@ -1,6 +1,6 @@
 {
   "name": "zoom-care-candidate-project-nodejs",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "private": true,
   "engines": {
     "node": ">=10"
@@ -8,14 +8,19 @@
   "scripts": {
     "start": "cross-env PORT=3001 DEBUG=zoom-care-candidate-project-nodejs:* node ./bin/www",
     "dev": "cross-env PORT=3001 DEBUG=zoom-care-candidate-project-nodejs:* nodemon ./bin/www",
-    "debug": "cross-env PORT=3001 DEBUG=zoom-care-candidate-project-nodejs:* node --inspect --inspect-brk=5858 ./bin/www"
+    "debug": "cross-env PORT=3001 DEBUG=zoom-care-candidate-project-nodejs:* node --inspect --inspect-brk=5858 ./bin/www",
+    "lint": "eslint .",
+    "test": "npm run lint && mocha --exit ./tests/master.js"
   },
   "dependencies": {
+    "body-parser": "^1.19.0",
     "clean-css": ">=4.1.11",
     "cookie-parser": "~1.4.3",
+    "cors": "^2.8.5",
     "cross-env": "^5.2.0",
     "debug": "~2.6.9",
     "express": "~4.16.0",
+    "express-validator": "^6.4.0",
     "http-errors": "~1.6.2",
     "lodash": ">=4.17.13",
     "lokijs": "^1.5.6",
@@ -23,6 +28,10 @@
     "pug": "^2.0.4"
   },
   "devDependencies": {
-    "nodemon": "^1.18.11"
+    "nodemon": "^1.18.11",
+    "chai": "^4.2.0",
+    "eslint": "^5.16.0",
+    "mocha": "^6.1.4",
+    "supertest": "^4.0.2"
   }
 }
