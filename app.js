@@ -5,6 +5,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
 var app = express();
+var userRouter = require('./api/userRouter')
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -16,17 +17,20 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.get('/', (req, res) => {
+app.get('/', (_req, res) => {
   res.render('index', { title: 'ZOOM+Care Candidate Code Challenge - NodeJS API' });
 });
 
+// user API
+app.use('/user', userRouter);
+
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use((_req, _res, next) => {
   next(createError(404));
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use((err, req, res, _next) => {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
