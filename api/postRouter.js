@@ -1,3 +1,4 @@
+var createError = require('http-errors');
 var express = require('express');
 var dataService = require('./dataService');
 var helpers = require('./helper')
@@ -14,6 +15,10 @@ const postAction = (req, res, callback) => {
 // you need to set mergeParams: true on the router,
 // if you want to access params from the parent router
 var postRouter = express.Router({mergeParams: true});
+var commentRouter = require('./commentRouter');
+// you can nest routers by attaching them as middleware:
+postRouter.use('/:postId/comment', commentRouter);
+
 
 postRouter.all('*', (req, res, next) => {
   helpers.checkAuthHeader(req, res, next);

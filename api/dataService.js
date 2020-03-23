@@ -6,8 +6,11 @@ db.init();
 
 var users = db.getDatabase().getCollection('users');
 var posts = db.getDatabase().getCollection('posts');
+var comments = db.getDatabase().getCollection('comments');
 
 module.exports = {
+
+  // users
 
   createUser (newUser) {
     logger.info('Creating new user:', newUser);
@@ -53,12 +56,39 @@ module.exports = {
 
   getPost (userId, postId) {
     logger.debug(`Fetching post ${postId} for user: ${userId}`);
-    return posts.findOne({'userId': { '$eq' : Number(userId) }}, {'id': { '$eq' : Number(postId) }});
+    return posts.findOne({'userId': { '$eq' : Number(userId) }, 'id': { '$eq' : Number(postId) }});
   },
 
   savePost (post) {
     logger.info('Updating post:', post);
     return posts.update(post);
   },
+
+  // comments
+
+  createComment (newComment) {
+    logger.info('Creating new comment:', newComment);
+    return comments.insertOne(newComment);
+  },
+
+  removeComment (comment) {
+    logger.info('Removing comment:', comment);
+    return comments.remove(comment);
+  },
+
+  getAllComments (userId, postId) {
+    logger.debug(`Fetching comments for post/user: ${postId}/${userId}`);
+    return comments.find({'postId': { '$eq' : Number(postId) }});
+  },
+
+  getComment (userId, postId, commentId) {
+    logger.debug(`Fetching comment ${commentId} from ${postId} by user: ${userId}`);
+    return comments.findOne({'postId': { '$eq' : Number(postId) }, 'id': { '$eq' : Number(commentId) }});
+  },
+
+  saveComment (comment) {
+    logger.info('Updating comment:', comment);
+    return comments.update(comment);
+  }
 
 }

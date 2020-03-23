@@ -5,7 +5,7 @@ var dataService = require('./dataService');
 module.exports = {
   checkAuthHeader (req, res, next) {
     // don't require auth for reads
-    if (/get/i.test(req.method)) next();
+    if (/get/i.test(req.method)) return next();
 
     if (!(req.header('Authorization') || req.header('authorization'))) {
       logger.warn('Unauthorized access attempted!');
