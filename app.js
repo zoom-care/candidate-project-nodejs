@@ -1,13 +1,18 @@
 var createError = require('http-errors');
 var express = require('express');
+var cors = require('cors');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('./logger'); // application logger
 var morgan = require('morgan'); // http request logger middleware
 
 logger.info('Initializing application');
-var app = express();
 var userRouter = require('./api/userRouter')
+var app = express();
+
+// https://expressjs.com/en/resources/middleware/cors.html
+// Simple Usage (Enable All CORS Requests)
+app.use(cors());
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
